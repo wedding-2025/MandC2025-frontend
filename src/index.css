@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'font_1';
+  src: url('./assets/fonts/font1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'font_2';
+  src: url('./assets/fonts/font2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'font_3';
+  src: url('./assets/fonts/font3.otf') format('opentype');
+}
+
+
+@layer base {
+  .nav-btn {
+    @apply py-3 text-black whitespace-nowrap cursor-pointer hover:scale-105 hover:transition-all duration-75;
+  }
+
+  .wed-title {
+    @apply py-0 text-black whitespace-nowrap cursor-pointer hover:scale-105 hover:transition-all duration-75;
+  }
+
+  .right-Arrow {
+    @apply text-[15px] text-black group-hover:translate-x-1 transition-all;
+  }
+
+  .mb-nav {
+    @apply flex justify-center items-center w-full px-6 py-3 text-black text-left whitespace-nowrap cursor-pointer hover:scale-105 hover:transition-all duration-75;
+  }
+
+  .footer-btn {
+    @apply font-semibold text-slate-50 hover:text-[#e763ac] focus:text-[#7a0646];
+  }
+
+  .footer-i {
+    @apply text-slate-50 font-semibold text-2xl hover:text-[#e763ac] focus:text-[#7a0646]
+  }
+  
+  .hide-scroll-bar::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+  }
+
+  /* Hide scrollbar for IE, Edge, and Firefox */
+  .hide-scroll-bar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;      /* Firefox */
+  }
+}

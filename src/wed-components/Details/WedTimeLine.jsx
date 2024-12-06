@@ -77,7 +77,7 @@ const WedTimeLine = () => {
                     </h3>
                     <p className="mt-4 text-base sm:text-lg font-normal text-slate-600">
                       <span>
-                      <span className='text-slate-700 font-semibold'>At 10:00 am, </span>Join us for a delightful <span className='font-semibold text-slate-700'>Traditional Marriage @ Ezeifesie Compound Umuojogwo Village Umuchu Aguata L.G.A. Anambra State (Bride's Residence).</span>
+                      <span className='text-slate-700 font-semibold'>At 02:00 pm, </span>Join us for a delightful <span className='font-semibold text-slate-700'>Traditional Marriage @ Ezeifesie Compound Umuojogwo Village Umuchu Aguata L.G.A. Anambra State (Bride's Residence).</span>
                       </span>
                     </p>
                   </div>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { FaCalendarDays } from 'react-icons/fa6';
 import { FaChurch } from 'react-icons/fa';
-import TradIcon from '../../assets/images/TradIcon.png';
+// import TradIcon from '../../assets/images/TradIcon.png';
 import SlideFromRight from '../../Animations/SlideFromRight';
 
 const EventCategories = () => {
+  const TradIcon = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482104/jyci5xaf1hw9jjb7ernb.png';
+
   return (
     <>
       <div style={{ width: '100%', opacity: '1' }}>

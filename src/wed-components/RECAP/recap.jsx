@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 // import { HairBall } from 'react-loader-spinner/experimental';
 import { Vortex } from 'react-loader-spinner';
-import recapImg from '../../assets/images/recapImg2.png';
+// import recapImg from '../../assets/images/recapImg2.png';
 
 const NewRecap = () => {
   const [mediaItems, setMediaItems] = useState([]);
@@ -15,6 +15,8 @@ const NewRecap = () => {
   const [isFetchingMedia, setIsFetchingMedia] = useState(false);
   const fileInputRef = useRef(null);
   const touchStartRef = useRef(null);
+
+  const recapImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qeoxjv1jmforzrjch0vw.png';
 
   // Retrieving of uploaded image urls
   useEffect(() => {

@@ -134,7 +134,7 @@ const Gallery = () => {
                 </div>
               </SlideFromBottom>
             ))}
-            <div className="relative top-8 sm:top-0 mx-auto sm:ml-[30%] my-auto text-lg sm:text-xl md:text-2xl w-fit px-[20px] py-2 group whitespace-nowrap font-normal text-black flex gap-2 items-center justify-center rounded-full bg-[#bd4968]/80 hover:bg-[#b65b69]/80">
+            <div className="relative top-8 sm:top-0 mx-auto sm:ml-[30%] my-auto text-lg sm:text-xl md:text-2xl w-fit px-[20px] py-2 group whitespace-nowrap font-normal text-black flex gap-2 items-center justify-center rounded-full bg-pink-400 hover:bg-pink-500">
               <NavLink to='/recap'>
                 <span className='flex flex-row items-center justify-items-center space-x-2 font-serif'>
                   <span>View More</span>

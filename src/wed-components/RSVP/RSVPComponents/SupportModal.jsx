@@ -69,7 +69,7 @@ const SupportModal = ({ isOpen, handleClose }) => {
               <div className="flex justify-end relative -top-5 left-5">
                 <button
                   className="text-gray-600 hover:text-gray-800 border border-black w-10 h-10 rounded-full flex text-center justify-center relative"
-                  onClick={handleClose}
+                  onClick={() => { handleClose(); setIsDrawerOpen(true); }}
                 >
                   <span className="text-2xl absolute top-[50%] translate-y-[-50%]">
                     <FaTimes />
@@ -97,7 +97,7 @@ const SupportModal = ({ isOpen, handleClose }) => {
                 <span>
                   <button
                     className="bg-[#64003c] text-gray-200 px-6 py-2 rounded-md hover:bg-[#6e204f] transition-colors delay-100 flex items-center justify-center gap-2 font-custom2"
-                    onClick={() => { setIsDrawerOpen(true); handleClose();}} // Open drawer
+                    onClick={() => { handleClose(); setIsDrawerOpen(true); }} // Open drawer
                   >
                     <FaGift />
                     <span className='mt-1'>Send a Gift</span>

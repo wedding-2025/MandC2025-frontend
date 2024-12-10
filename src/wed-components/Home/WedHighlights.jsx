@@ -19,7 +19,7 @@ const WedHighlights = () => {
         <section className="py-12 bg-[#f5b7cc]/50 sm:py-16 lg:py-20">
           <div className="px-4 mx-auto max-w-7xl flex flex-col sm:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto text-center">
-              <p className="text-lg font-medium text-slate-700 mb-8">
+              <p className="text-lg font-medium text-slate-700 mb-8 underline underline-offset-4">
                 Discover the key moments that will make our wedding unforgettable.
               </p>
               <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl xl:text-5xl font-custom">

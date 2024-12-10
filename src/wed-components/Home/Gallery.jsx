@@ -15,7 +15,7 @@ import SlideFromBottom from '../../Animations/SlideFromBottom';
 const Gallery = () => {
   // checking if selectedCategory is active
   const linkCategory = (isActive) => {
-    return isActive ? 'bg-pink-400' : '';
+    return isActive ? 'bg-pink-400' : 'bg-red-300/50';
   }
 
 
@@ -72,7 +72,7 @@ const Gallery = () => {
                 <li className="inline-block">
                   <button
                     onClick={() => setSelectedCategory('Engagement')}
-                    className={ `${linkCategory(selectedCategory === 'Engagement')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-100 rounded-full text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-sky-200 text-slate-900 font-gFont1` }
+                    className={ `${linkCategory(selectedCategory === 'Engagement')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-100 rounded-full text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-lg shadow-gray-500 text-slate-900 font-gFont1` }
                   >
                     <span>Engagement</span>
                   </button>
@@ -81,7 +81,7 @@ const Gallery = () => {
                 <li className="inline-block">
                   <button
                     onClick={() => setSelectedCategory('Pre-Wedding')}
-                    className={ `${linkCategory(selectedCategory === 'Pre-Wedding')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-100 rounded-full text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-sky-200 text-slate-900 font-gFont1` }
+                    className={ `${linkCategory(selectedCategory === 'Pre-Wedding')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-100 rounded-full text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-lg shadow-gray-500 text-slate-900 font-gFont1` }
                   >
                     <span>Pre-Wedding</span>
                   </button>
@@ -90,7 +90,7 @@ const Gallery = () => {
                 <li className="inline-block">
                   <button
                     onClick={() => setSelectedCategory('Wedding & Traditional Marriage')}
-                    className={ `${linkCategory(selectedCategory === 'Wedding & Traditional Marriage')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-100 rounded-full text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-sky-200 text-slate-900 font-gFont1` }
+                    className={ `${linkCategory(selectedCategory === 'Wedding & Traditional Marriage')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-100 rounded-full text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-lg shadow-gray-500 text-slate-900 font-gFont1` }
                   >
                     <span>Wedding & Traditional Marriage</span>
                   </button>
@@ -103,9 +103,9 @@ const Gallery = () => {
             {images[selectedCategory].map((image, index) => (
               <SlideFromBottom key={index}>
                 <div key={index} style={{ opacity: '1', transform: 'none' }}>
-                  <div className="relative overflow-hidden rounded-lg shadow-lg group bg-slate-100">
+                  <div className="relative overflow-hidden rounded-lg group bg-slate-100 shadow-xl shadow-gray-500">
                     <div
-                      className="transition-transform object-cover w-full h-auto aspect-[4/4] duration-500 ease-in-out transform group-hover:scale-110"
+                      className="transition-transform object-cover w-full h-auto aspect-[4/4] duration-500 ease-in-out transform group-hover:scale-110 shadow-2xl shadow-gray-500"
                       style={{
                         transform: 'none',
                         opacity: '1',
@@ -117,7 +117,7 @@ const Gallery = () => {
                       <img
                         src={image.src}
                         alt=""
-                        className="transition-transform object-cover w-full h-full aspect-[4/3] duration-500 ease-in-out transform group-hover:scale-110"
+                        className="transition-transform object-cover w-full h-full aspect-[4/3] duration-500 ease-in-out transform group-hover:scale-110 shadow-2xl shadow-gray-500"
                       />
                     </div>
                     <div className="absolute inset-0 pointer-events-none bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -134,7 +134,7 @@ const Gallery = () => {
                 </div>
               </SlideFromBottom>
             ))}
-            <div className="relative top-8 sm:top-0 mx-auto sm:ml-[30%] my-auto text-lg sm:text-xl md:text-2xl w-fit px-[20px] py-2 group whitespace-nowrap font-normal text-black flex gap-2 items-center justify-center rounded-full bg-pink-400 hover:bg-pink-500">
+            <div className="relative top-8 sm:top-0 mx-auto sm:ml-[30%] my-auto text-lg sm:text-xl md:text-2xl w-fit px-[20px] py-2 group whitespace-nowrap font-normal text-black flex gap-2 items-center justify-center rounded-full bg-pink-400 hover:bg-pink-500 shadow-xl shadow-gray-700">
               <NavLink to='/recap'>
                 <span className='flex flex-row items-center justify-items-center space-x-2 font-serif'>
                   <span>View More</span>

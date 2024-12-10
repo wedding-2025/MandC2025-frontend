@@ -96,8 +96,7 @@ const NewRsvpForm = () => {
 
   const handleSubmit = async (event) => {
     // const BACKEND_URL = 'http://localhost:3500';
-    // const BACKEND_URL = 'https://wedding-2025-henam5nmj-dubem-umehs-projects.vercel.app';
-    const BACKEND_URL = 'https://server-rsvp-email.onrender.com';
+    const BACKEND_URL = import.meta.env.VITE_EMAIL_BACKEND_URL;
     
     event.preventDefault(); // Prevent default form behavior
     const startTime = performance.now(); // Start timing

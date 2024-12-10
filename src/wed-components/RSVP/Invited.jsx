@@ -51,7 +51,7 @@ const Invited = () => {
           </div>
 
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl lg:mx-0">
+            <div className="mx-auto ml-4 mt-4 max-w-2xl">
               <h2 className="text-4xl font-bold tracking-tight text-[#d3d3d3] sm:text-6xl font-custom">
                 <span>You're Invited!</span>
               </h2>

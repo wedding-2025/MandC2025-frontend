@@ -20,7 +20,7 @@ const NewRecap = () => {
 
   // Retrieving of uploaded image urls
   useEffect(() => {
-    const BACKEND_URL = 'https://server-recap-server.onrender.com';
+    const BACKEND_URL = import.meta.env.VITE_RECAP_BACKEND_URL;
     // Fetch media items from the backend on component mount
     const fetchMediaItems = async () => {
       setIsFetchingMedia(true);
@@ -243,7 +243,7 @@ const NewRecap = () => {
                     <img
                       src={item.imgUrl}
                       alt={`media-${index}`}
-                      className="w-full h-full object-contain rounded-lg bg-gray-400/50"
+                      className="w-full h-auto max-h-14 sm:max-h-32 object-cover rounded-lg bg-gray-400/50"
                     />
                   </div>
                 ))
@@ -253,10 +253,10 @@ const NewRecap = () => {
           </div>
         )}
         {/* Display Selected Media inset-y-20 inset-x-0 backdrop-blur-lg h-full w-full bg-white/0 rounded-t-xl sm:relative sm:inset-0 sm:-inset-y-96 sm:inset-x-0 sm:-mb-[390px] mx-auto overflow-x-hidden left-[50%] transform translate-x-[-50%]*/}
-        {selectedMediaIndex !== null && (
-          <div className='fixed inset-0 z-50 w-full h-full left-[50%] translate-x-[-50%]'>
+        {expandedFolder && selectedMediaIndex !== null && (
+          <div className='fixed inset-0 z-50 w-full h-full left-[50%] translate-x-[-50%] bg-white/50 backdrop-blur-md'>
             <div
-              className="relative w-full max-w-7xl h-auto p-4 bg-white/0 backdrop-blur-lg rounded-lg overflow-hidden my-auto mx-auto overflow-x-hidden"
+              className="relative w-full max-w-7xl h-auto p-4 rounded-lg overflow-hidden my-auto mx-auto overflow-x-hidden"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
             >
@@ -268,7 +268,7 @@ const NewRecap = () => {
               </button>
               <div className="mt-14 flex items-center justify-between">
                 <button
-                  className="relative text-3xl sm:text-5xl #ad337a text-gray-50 p-3 bg-gray-500 rounded-xl"
+                  className="relative text-3xl sm:text-5xl text-gray-50 py-3 bg-gray-700 rounded-lg mr-2 sm:mr-0"
                   onClick={handlePrev}
                 >
                   <FaChevronLeft />
@@ -279,7 +279,7 @@ const NewRecap = () => {
                     className=" w-full h-full max-h-[50vh] sm:max-h-[60vh] object-contain rounded-lg overflow-x-hidden"
                   />
                 <button
-                  className="relative text-3xl sm:text-5xl text-gray-50 p-3 bg-gray-500 rounded-xl"
+                  className="relative text-3xl sm:text-5xl text-gray-50 py-3 bg-gray-700 rounded-lg ml-2 sm:mr-0"
                   onClick={handleNext}
                 >
                   <FaChevronRight />

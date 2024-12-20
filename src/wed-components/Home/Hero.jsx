@@ -6,7 +6,7 @@ import CountDown from './CountDown';
 
 const Hero = () => {
 
-  const heroBg3 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733148696/itdzbmvn0zwsxxmcao80.jpg';
+  const heroBg3 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_auto,q_auto/v1733148696/itdzbmvn0zwsxxmcao80.jpg';
 
   return (
     <>

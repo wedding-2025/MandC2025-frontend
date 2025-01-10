@@ -1,4 +1,4 @@
-import React, /* { useState, useEffect } */ from 'react';
+import React /* { useState, useEffect } */ from 'react';
 import RecapTitle from '../wed-components/RECAP/RecapTitle';
 import NewRecap from '../wed-components/RECAP/recap';
 // import CountDown from '../wed-components/Home/CountDown';

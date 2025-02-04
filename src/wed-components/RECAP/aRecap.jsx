@@ -15,7 +15,8 @@ const ARecap = () => {
 
   // Retrieving of uploaded image urls
   useEffect(() => {
-    const BACKEND_URL = 'http://localhost:4000';
+    // const BACKEND_URL = 'http://localhost:4000';
+    const BACKEND_URL = import.meta.env.VITE_RECAP_BACKEND_URL;
     // Fetch media items from the backend on component mount
     const fetchMediaItems = async () => {
       try {
@@ -55,7 +56,8 @@ const ARecap = () => {
   };
 
   const handleFileUpload = async (event) => {
-    const BACKEND_URL = 'http://localhost:4000';
+    // const BACKEND_URL = 'http://localhost:4000';
+    const BACKEND_URL = import.meta.env.VITE_RECAP_BACKEND_URL;
 
     const files = event.target.files;
     if (!files) return;

@@ -160,9 +160,9 @@ function Navbar({ scrollToContact }) {
                 <button className='nav-btn'><span><NavLink to="/">Home</NavLink></span></button>
                 <button className='nav-btn'><span><NavLink to="/details">Details</NavLink></span></button>
 
-                {/* <button className='nav-btn'><span><NavLink to="/rsvp">RSVP</NavLink></span></button> */}
+                <button className='nav-btn'><span><NavLink to="/rsvp">RSVP</NavLink></span></button>
 
-                <button className='nav-btn'><span><NavLink to="/picture">Pics</NavLink></span></button> {/* Remove Later */}
+                {/* <button className='nav-btn'><span><NavLink to="/picture">Pics</NavLink></span></button> Remove Later */}
 
 
                 <button className='nav-btn' onClick={() => setIsDrawerOpen(true)}>Gift</button>
@@ -231,13 +231,13 @@ function Navbar({ scrollToContact }) {
                 </button>
 
 
-                {/* <button className="mb-nav" style={{ height: '50px' }}>
-                  <span><NavLink to="/rsvp">RSVP</NavLink></span>
-                </button> */}
-
                 <button className="mb-nav" style={{ height: '50px' }}>
+                  <span><NavLink to="/rsvp">RSVP</NavLink></span>
+                </button>
+
+                {/* <button className="mb-nav" style={{ height: '50px' }}>
                   <span><NavLink to="/picture">Pics</NavLink></span>
-                </button> {/* Remove Later */}
+                </button> Remove Later */}
 
                 
                 <button className="mb-nav" style={{ height: '50px' }} onClick={mbGift}>

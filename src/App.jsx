@@ -22,8 +22,8 @@ import { ToastContainer } from 'react-toastify';
 import './App.css';
 
 
-import NewPicture from './wed-components/RECAP/Test/NewPicture.jsx'; // Remove later
-import TestWrapper from './wed-components/RECAP/Test/TestWrapper.jsx'; // Remove Later
+// import NewPicture from './wed-components/RECAP/Test/NewPicture.jsx'; // Remove later
+// import TestWrapper from './wed-components/RECAP/Test/TestWrapper.jsx'; // Remove Later
 
 
 
@@ -92,9 +92,9 @@ const App = () => {
         <Route index element={ <HomePage contactRef={contactRef} /> } />
         <Route path='/details' element={ <DetailsPage /> } />
 
-        {/* <Route path='/rsvp' element={ <Outlet /> } > */}
+        <Route path='/rsvp' element={ <Outlet /> } >
 
-        <Route path='/picture' element={ <NewPicture /> } > {/* Remove Later */}
+        {/* <Route path='/picture' element={ <NewPicture /> } > Remove Later */}
         {/* <Route path='/picture' element={ <TestWrapper /> } > Remove Later */}
 
 

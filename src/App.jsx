@@ -22,6 +22,11 @@ import { ToastContainer } from 'react-toastify';
 import './App.css';
 
 
+import NewPicture from './wed-components/RECAP/Test/NewPicture.jsx'; // Remove later
+import TestWrapper from './wed-components/RECAP/Test/TestWrapper.jsx'; // Remove Later
+
+
+
 // Wrapper component to handle route refreshing
 const RouteWrapper = ({ children })  => {
   const location = useLocation();
@@ -86,7 +91,13 @@ const App = () => {
         
         <Route index element={ <HomePage contactRef={contactRef} /> } />
         <Route path='/details' element={ <DetailsPage /> } />
-        <Route path='/rsvp' element={ <Outlet /> } >
+
+        {/* <Route path='/rsvp' element={ <Outlet /> } > */}
+
+        <Route path='/picture' element={ <NewPicture /> } > {/* Remove Later */}
+        {/* <Route path='/picture' element={ <TestWrapper /> } > Remove Later */}
+
+
           <Route index element={ <RsvpPage scrollToContact={scrollToContact} /> } />
           <Route path='rsvp-form' element={ <RsvpFormPage /> } />
         </Route>

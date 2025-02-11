@@ -30,9 +30,9 @@ function Navbar({ scrollToContact }) {
 
   const otherMethods = {
     PayPal: 'https://paypal.me/dubemumeh',
-    USDT: '6487874826871871546878',
-    BTC: '6884165454563896482634682',
-    ETH: '7523475362736431673416436',
+    USDT: '0x06d9869e0fc43bfd19ed484df0d22146fa483426',
+    BTC: '14N3rgP1r6xb9GSv2zhRpqRKx5jsU1R8js',
+    ETH: '0x06d9869e0fc43bfd19ed484df0d22146fa483426',
   };
 
   const [paypalLink, setPaypalLink] = useState(
@@ -159,7 +159,12 @@ function Navbar({ scrollToContact }) {
               <nav className="w-full h-full flex items-center justify-center gap-8 text-[18px]">
                 <button className='nav-btn'><span><NavLink to="/">Home</NavLink></span></button>
                 <button className='nav-btn'><span><NavLink to="/details">Details</NavLink></span></button>
-                <button className='nav-btn'><span><NavLink to="/rsvp">RSVP</NavLink></span></button>
+
+                {/* <button className='nav-btn'><span><NavLink to="/rsvp">RSVP</NavLink></span></button> */}
+
+                <button className='nav-btn'><span><NavLink to="/picture">Pics</NavLink></span></button> {/* Remove Later */}
+
+
                 <button className='nav-btn' onClick={() => setIsDrawerOpen(true)}>Gift</button>
                 <button className='nav-btn text-rose-950 font-semibold'><span><NavLink to="/recap">RECAP</NavLink></span></button>
               </nav>
@@ -224,9 +229,17 @@ function Navbar({ scrollToContact }) {
                 <button className="mb-nav" style={{ height: '50px' }}>
                   <span><NavLink to="/details">Details</NavLink></span>
                 </button>
-                <button className="mb-nav" style={{ height: '50px' }}>
+
+
+                {/* <button className="mb-nav" style={{ height: '50px' }}>
                   <span><NavLink to="/rsvp">RSVP</NavLink></span>
-                </button>
+                </button> */}
+
+                <button className="mb-nav" style={{ height: '50px' }}>
+                  <span><NavLink to="/picture">Pics</NavLink></span>
+                </button> {/* Remove Later */}
+
+                
                 <button className="mb-nav" style={{ height: '50px' }} onClick={mbGift}>
                   <span>Gift</span>
                 </button>

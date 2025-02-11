@@ -1,6 +1,10 @@
 import React /* { useState, useEffect } */ from 'react';
 import RecapTitle from '../wed-components/RECAP/RecapTitle';
-import NewRecap from '../wed-components/RECAP/recap';
+// import NewRecap from '../wed-components/RECAP/recap';
+import RecapWrapper from '../wed-components/RECAP/New/Recap-1.1';
+// import TestWrapper from '../wed-components/RECAP/Test/TestWrapper';
+
+
 // import CountDown from '../wed-components/Home/CountDown';
 // // import recapImg from '../assets/images/recapImg2.png';
 // import { Link } from 'react-router-dom';
@@ -74,7 +78,11 @@ const RecapPage = () => {
   return (
     <div className='bg-[#b8b5b5]'>
       <RecapTitle />
-      <NewRecap className='overflow-x-hidden' style={{ width: '100vw', height: '100vh' }} />
+      {/* <NewRecap className='overflow-x-hidden' style={{ width: '100vw', height: '100vh' }} /> */}
+
+      <RecapWrapper className='overflow-x-hidden' style={{ width: '100vw', height: '100vh' }} />
+
+      {/* <TestWrapper className='overflow-x-hidden' style={{ width: '100vw', height: '100vh' }} /> Remove Later */}
     </div>
   );
 };

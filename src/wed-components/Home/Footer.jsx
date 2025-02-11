@@ -20,9 +20,9 @@ const Footer = () => {
 
   const otherMethods = {
     PayPal: 'https://paypal.me/dubemumeh',
-    USDT: '6487874826871871546878',
-    BTC: '6884165454563896482634682',
-    ETH: '7523475362736431673416436',
+    USDT: '0x06d9869e0fc43bfd19ed484df0d22146fa483426',
+    BTC: '14N3rgP1r6xb9GSv2zhRpqRKx5jsU1R8js',
+    ETH: '0x06d9869e0fc43bfd19ed484df0d22146fa483426',
   };
 
   const [paypalLink, setPaypalLink] = useState(

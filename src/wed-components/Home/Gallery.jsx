@@ -31,32 +31,35 @@ const Gallery = () => {
         category: 'Engagement' 
       },
       { 
-        src:  'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482105/rxa7qdcirzgl11rfgj0p.jpg', 
+        src:  'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482106/do9zutipcm3pgl1hir3d.jpg', 
+        // src:  'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482106/tmvfbb2lwuhwbveibrhw.jpg', 
         title: 'Engagement Shoot', 
         category: 'Engagement' 
       }
     ],
     'Pre-Wedding': [
       { 
-        src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482104/oxaopamjbi7bulpoybhz.jpg', 
-        title: 'Preparations', 
+        // src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482104/oxaopamjbi7bulpoybhz.jpg', 
+        src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482106/tmvfbb2lwuhwbveibrhw.jpg', 
+        title: 'Church Wedding', 
         category: 'Pre-Wedding' 
       },
       { 
-        src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482106/tmvfbb2lwuhwbveibrhw.jpg', 
-        title: 'Bride and Groom', 
+        src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482106/rgquxzmbffrpbkofkjte.jpg', 
+        title: 'Cultural Rites', 
         category: 'Pre-Wedding' 
       }
     ],
     'Wedding & Traditional Marriage': [
       { 
-        src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482106/do9zutipcm3pgl1hir3d.jpg', 
-        title: 'Church Wedding', 
+        src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482104/oxaopamjbi7bulpoybhz.jpg', 
+        title: 'Preparations', 
         category: 'Wedding & Traditional Marriage' 
       },
       { 
-        src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482106/rgquxzmbffrpbkofkjte.jpg', 
-        title: 'Cultural Rites', 
+        // src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482106/tmvfbb2lwuhwbveibrhw.jpg', 
+        src: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482105/rxa7qdcirzgl11rfgj0p.jpg', 
+        title: 'Bride and Groom', 
         category: 'Wedding & Traditional Marriage' 
       }
     ]

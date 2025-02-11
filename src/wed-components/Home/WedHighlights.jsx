@@ -9,7 +9,7 @@ const WedHighlights = () => {
     {
       ceremony: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/ozrldmdetbhsnttzwgds.png',
       reception: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482103/zkfqtnxdszoxsril7m6f.png',
-      afterParty: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733822917/lyarhro3kzz0hpp8dvoz.png'
+      // afterParty: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733822917/lyarhro3kzz0hpp8dvoz.png'
     }
   ]
 
@@ -64,7 +64,7 @@ const WedHighlights = () => {
                     </p>
                   </div>
                 {/* AFTER PARTY */}
-                  <div className="flex flex-col items-center md:items-start p-4 bg-red-300 border-2 border-gray-200 rounded-3xl shadow-md shadow-slate-600">
+                  {/* <div className="flex flex-col items-center md:items-start p-4 bg-red-300 border-2 border-gray-200 rounded-3xl shadow-md shadow-slate-600">
                     <h3 className="text-2xl font-bold text-slate-900 font-custom">After Party</h3>
                     <p className="mt-4 text-lg leading-7 text-slate-900">
                       An unforgettable evening of fun and laughter, joy and love.
@@ -79,7 +79,7 @@ const WedHighlights = () => {
                     <p className="text-base leading-7 text-slate-800 mt-4">
                       Let's continue the celebration with music and joy.
                     </p>
-                  </div>
+                  </div> */}
               </div>
             </SlideFromBottom>
           </div>

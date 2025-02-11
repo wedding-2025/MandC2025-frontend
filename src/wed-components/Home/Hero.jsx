@@ -1,6 +1,6 @@
 import React from 'react';
 // import heroBg3 from '../../assets/images/heroBg3.jpeg';
-import CountDown from './CountDown';
+// import CountDown from './CountDown';
 
 //background image is hero-bg
 
@@ -17,30 +17,30 @@ const Hero = () => {
               <div className="relative w-full h-full flex flex-col md:justify-between gap-10">
                 <div className="h-[1px] bg-white/40" style={{ width: '40%' }}></div>
                 {/* Count down */}
-                <div className="mt-[100%] sm:mt-[0]  sm:flex flex-col sm:flex-row sm:items-center md:justify-between" style={{ opacity: '1', transform: 'none' }}>
-                  <h1 className="text-2xl font-extrabold text-white md:text-2xl xl:text-5xl md:w-max-3/5">
+                <div className="mt-[150%] sm:mt-[0]  sm:flex flex-col sm:flex-row sm:items-center md:justify-between" style={{ opacity: '1', transform: 'none' }}>
+                  <h1 className="text-3xl font-normal sm:text-white xl:text-5xl text-center">
                     <span>
-                      <span datatype='text'>
-                        Countdown to Our Big Day
+                      <span datatype='text' className='flex items-center justify-center bg-gray-800/60 sm:bg-gray-800/20 text-gray-100 py-3 px-2 shadow-gray-50 shadow-inner rounded-lg'>
+                      Scroll to Explore!
                       </span>
                     </span>
                   </h1>
                   {/* COUNTDOWN CLOCK */}
-                  <span>
+                  {/* <span>
                     <CountDown />
-                  </span>
+                  </span> */}
                 </div>
                 {/* Join us and mark you calender */}
                 <div className="hidden w-full sm:grid grid-cols-1 gap-10 md:grid-cols-3 text-[20px]">
                   <p className="w-full text-white font-light" style={{ opacity: '1', transform: 'none' }}>
                     <span>
-                    Join us in celebrating our love story as we count down to the most special day of our lives
+                    Our wedding day was a beautiful celebration of love, joy, and cherished moments with our dear family and friends.
                     </span>
                   </p>
                   <div className="h-[1px] bg-white/40 mt-3.5" style={{ opacity: '1', transform: 'none' }}></div>
                   <p className="w-full text-white font-light" style={{ opacity: '1', transform: 'none' }}>
                     <span>
-                    Mark your calenders and get ready to witness a beautiful union.
+                    Thank you for being part of our journey and making our day truly unforgettable.
                     </span>
                   </p>
                 </div>

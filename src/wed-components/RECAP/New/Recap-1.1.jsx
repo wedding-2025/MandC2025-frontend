@@ -210,7 +210,7 @@ const RecapWrapper = () => {
                   <div
                     key={index}
                     className="w-full h-auto cursor-pointer mx-auto overflow-hidden"
-                    onClick={() => setSelectedMediaIndex(index)}
+                    onClick={() => setSelectedMediaIndex(index)} // Corrected line
                   >
                     <img
                       src={item.imgUrl}
@@ -240,10 +240,10 @@ const RecapWrapper = () => {
               <button
                 className="relative left-[15%] text-3xl sm:text-5xl cursor-pointer text-gray-50 py-3 bg-gray-700 rounded-lg mr-2 sm:mr-0 z-20"
                 onClick={handlePrev}
-              >
+              > 
                 <FaChevronLeft />
               </button>
-              <NewCarousel ref={sliderRef}>
+              <NewCarousel ref={sliderRef} initialSlide={selectedMediaIndex}>
                 {mediaItems.map((item, index) => (
                   <NewImageCard
                     key={index}

@@ -2,8 +2,8 @@ import React /* { useState, useEffect } */ from 'react';
 import { Helmet } from 'react-helmet-async';
 import RecapTitle from '../wed-components/RECAP/RecapTitle';
 // import NewRecap from '../wed-components/RECAP/recap';
-// import RecapWrapper from '../wed-components/RECAP/New/Recap-1.1';
-import TestWrapper from '../wed-components/RECAP/Test/TestWrapper';
+import RecapWrapper from '../wed-components/RECAP/New/Recap-1.1';
+// import TestWrapper from '../wed-components/RECAP/Test/TestWrapper';
 
 
 // import CountDown from '../wed-components/Home/CountDown';
@@ -95,8 +95,8 @@ const RecapPage = () => {
         <RecapTitle />
         {/* <NewRecap className='overflow-x-hidden' style={{ width: '100vw', height: '100vh' }} /> */}
 
-        {/* <RecapWrapper className='overflow-x-hidden' style={{ width: '100vw', height: '100vh' }} /> */}
-        <TestWrapper className='overflow-x-hidden' style={{ width: '100vw', height: '100vh' }} /> {/* Remove Later */}
+        <RecapWrapper className='overflow-x-hidden' style={{ width: '100vw', height: '100vh' }} />
+        {/* <TestWrapper className='overflow-x-hidden' style={{ width: '100vw', height: '100vh' }} /> Remove Later */}
       </div>
     </>
   );

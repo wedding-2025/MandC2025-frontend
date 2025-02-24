@@ -3,10 +3,10 @@ import { FaChevronLeft, FaChevronRight, FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 // import { Vortex } from 'react-loader-spinner';
-import NewCarousel from './NewCarousel';
-import { NewImageCard } from './NewImageCard';
+import NewCarousel from './Carousel';
+import { NewImageCard } from './ImageCard';
 
-const RecapWrapper = () => {
+const TestWrapper = () => {
   const [mediaItems, setMediaItems] = useState([]);
   const [selectedMediaIndex, setSelectedMediaIndex] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -363,4 +363,4 @@ const RecapWrapper = () => {
   );
 };
 
-export default RecapWrapper;
+export default TestWrapper;

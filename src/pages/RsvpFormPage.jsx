@@ -4,13 +4,13 @@ import NewRsvpForm from '../wed-components/RSVP/NewRsvpForm';
 // import RsvpBg from '../assets/images/RsvpBg.png';
 
 const RsvpFormPage = () => {
-  const RsvpBg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482103/roxfysaaqpcy4e6z6smb.webp';
+  const RsvpBg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1733482103/roxfysaaqpcy4e6z6smb.webp';
 
   return (
     <>
 
       <Helmet>
-        <link rel="preload" type="image/webp" href="https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482103/roxfysaaqpcy4e6z6smb.webp" as="image" />
+        <link rel="preload" type="image/webp" href="https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1733482103/roxfysaaqpcy4e6z6smb.webp" as="image" />
       </Helmet>
 
 

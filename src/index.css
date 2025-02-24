@@ -56,4 +56,17 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;      /* Firefox */
   }
+
+  /* For the Drop Down in Upload */
+  .Select {
+    @apply w-32 transition border border-slate-300 rounded inline-block cursor-pointer;
+  }
+
+  .Select .child {
+    @apply px-2 py-1;
+  }
+
+  .Select ul li {
+    @apply hover:bg-slate-200;
+  }
 }

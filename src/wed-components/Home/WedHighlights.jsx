@@ -30,7 +30,7 @@ const WedHighlights = () => {
             <SlideFromBottom>
               <div className="flex flex-col md:flex-row mt-10 md:mt-20 gap-10 md:gap-16 text-center md:text-left">
                 {/* CHURCH WEDDING */}
-                  <div className="flex flex-col items-center md:items-start p-4 bg-red-300 border-2 border-gray-200 rounded-3xl shadow-md shadow-slate-600">
+                  <div className="flex flex-col items-center md:items-start p-4 bg-red-300 border-2 border-gray-200 rounded-3xl shadow-md shadow-slate-600 w-full">
                     <h3 className="text-2xl font-bold text-slate-900 font-custom">Church Wedding</h3>
                     <p className="mt-4 text-lg leading-7 text-slate-900">
                       A heartfelt church wedding where we exchange our vows.
@@ -47,7 +47,7 @@ const WedHighlights = () => {
                     </p>
                   </div>
                 {/* TRADITIONAL MARRIAGE */}
-                  <div className="flex flex-col items-center md:items-start p-4 bg-red-300 border-2 border-gray-200 rounded-3xl shadow-md shadow-slate-600">
+                  <div className="flex flex-col items-center md:items-start p-4 bg-red-300 border-2 border-gray-200 rounded-3xl shadow-md shadow-slate-600 w-full">
                     <h3 className="text-2xl font-bold text-slate-900 font-custom">Traditional Marriage</h3>
                     <p className="mt-4 text-lg leading-7 text-slate-900">
                       Traditional Rites/Marriage at the bride's residence.

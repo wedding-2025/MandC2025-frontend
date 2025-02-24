@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { Vortex } from 'react-loader-spinner';
-import NewCarousel from './Carousel';
-import { NewImageCard } from './ImageCard';
+// import { Vortex } from 'react-loader-spinner';
+import NewCarousel from './NewCarousel';
+import { NewImageCard } from './NewImageCard';
 
 const RecapWrapper = () => {
   const [mediaItems, setMediaItems] = useState([]);
@@ -12,39 +12,87 @@ const RecapWrapper = () => {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isFetchingMedia, setIsFetchingMedia] = useState(false);
+  const [fetchProgress, setFetchProgress] = useState(0);
   const fileInputRef = useRef(null);
   const sliderRef = useRef(null);
   const touchStartRef = useRef(null);
 
+  // For Drop Down in Upload
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectValue, setSelectValue] = useState("Upload");
+
+  const updateValue = (value, string) => {
+    setSelectValue(value);
+    setIsOpen(false);
+
+    // Trigger the previous upload
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  // End of Drop Down in Upload
+
+
+  // For Image Category (Church and Traditional)
+  const [selectedCategory, setSelectedCategory] = useState("Traditional");
+
+  // End of Image Category
+
   const recapImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qeoxjv1jmforzrjch0vw.png';
+
+  // Declared fetchMediaItems() to be a global function to make accessible
+
+  const BACKEND_URL = import.meta.env.VITE_RECAP_BACKEND_URL;
+  // const BACKEND_URL = 'http://localhost:4000';
+  const cache = {}; // Initialize an in-memory cache
+  // Fetch media items from the backend on component mount
+  const fetchMediaItems = async (category = "") => {
+    setIsFetchingMedia(true);
+    setFetchProgress(0);
+
+    const cacheKey = `media-items-${category || 'all'}`;
+    
+    // Check if data is in cache
+    if (cache[cacheKey]) {
+      setMediaItems(cache[cacheKey]);
+      setIsFetchingMedia(false);
+      return;
+    }
+
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/media-items`, {
+        params: { category },
+        onDownloadProgress: (progressEvent) => {
+          const total = progressEvent.total;
+          const current = progressEvent.loaded;
+          const percentCompleted = Math.round((current / total) * 100);
+          setFetchProgress(percentCompleted);
+        },
+      });
+      setMediaItems(res.data);
+      cache[cacheKey] = res.data; // Store the fetched data in cache
+    } catch (error) {
+      console.error('Error fetching media items: ', error);
+      toast.error('Failed to fetch media items. Please try again.');
+    } finally {
+      setIsFetchingMedia(false);
+    }
+  };
 
   // Retrieving of uploaded image urls
   useEffect(() => {
-    const BACKEND_URL = import.meta.env.VITE_RECAP_BACKEND_URL;
-    // Fetch media items from the backend on component mount
-    const fetchMediaItems = async () => {
-      setIsFetchingMedia(true);
-      try {
-        const res = await axios.get(`${BACKEND_URL}/api/media-items`);
-        setMediaItems(res.data);
-      } catch (error) {
-        console.error('Error fetching media items: ', error);
-      } finally {
-        setIsFetchingMedia(false);
-      }
-    };
-
-    fetchMediaItems();
-  }, []);
+    fetchMediaItems(selectedCategory);
+  }, [selectedCategory]);
 
   const uploadFile = async (file) => {
     const data = new FormData();
     data.append('file', file);
-    data.append('upload_preset', 'mandc_default_img');
+    data.append('upload_preset', 'mandc_default_img'); // Ensure this upload preset is correctly set up in Cloudinary
 
     try {
-      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME // Your Cloudinary Cloud Name
-      console.log(cloudName)
+      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME; // Ensure this is correctly set in your environment variables
+      console.log(cloudName);
       const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
       const res = await axios.post(api, data, {
@@ -55,17 +103,15 @@ const RecapWrapper = () => {
       });
 
       const { secure_url } = res.data;
-      console.log(secure_url)
+      console.log(secure_url);
       return secure_url;
     } catch (error) {
-      console.error('Cloudinary upload error:', error.res ? error.res.data : error);
+      console.error('Cloudinary upload error:', error.response ? error.response.data : error);
       return null;
     }
   };
 
   const handleFileUpload = async (event) => {
-    const BACKEND_URL = import.meta.env.VITE_RECAP_BACKEND_URL;
-  
     const files = event.target.files;
     if (!files || files.length === 0) return;
   
@@ -86,7 +132,7 @@ const RecapWrapper = () => {
       
           if (imgUrl) {
             uploadedMediaItems.push({ type: 'image', imgUrl });
-            await axios.post(`${BACKEND_URL}/api/upload-url`, { imgUrl });
+            await axios.post(`${BACKEND_URL}/api/upload-url`, { imgUrl, category: selectValue });
             toast.success(`Uploaded: ${file.name}`);
           }
         } else {
@@ -140,13 +186,24 @@ const RecapWrapper = () => {
     }
   };
 
+  // Optimized Images from Cloudinary
+  const optimizedImage = (url) => {
+    return url.replace("/upload/", "/upload/f_webp,q_auto,w_auto/");
+  };  
+
+
+  // Category button
+  const selectCat = (isActive) => {
+    return isActive ? 'bg-[#e70d8c] text-gray-50 hover:text-gray-800' : 'bg-[#f1ecec]';
+  };
+
   return (
     <div
       className='w-full h-full z-10' 
       style={{ 
         width: '100%', 
         height: '100vh', 
-        backgroundImage: `url(${recapImg})`,
+        backgroundImage: `url(${optimizedImage(recapImg)})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -155,7 +212,7 @@ const RecapWrapper = () => {
       }}
     >
       <div className="p-6 flex flex-col mx-auto items-center mt-0 bg-white/40 backdrop-blur-lg !z-20 mb-0 h-full w-full" style={{ opacity: '1', height: '100%' }}>
-        <div className="flex flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto">
+        <div className=" flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto hidden">{/* Remove hidden to add flex */}
           <input
             type="file"
             id="file-upload"
@@ -165,38 +222,77 @@ const RecapWrapper = () => {
             className="hidden"
             onChange={handleFileUpload}
           />
-          <label
+          {/* <label
             onClick={() => fileInputRef.current && fileInputRef.current.click()}
             className="cursor-pointer bg-[#e70d8c] text-white rounded px-5 py-3 hover:bg-pink-400 transition-colors duration-200 hidden"
           >
             Upload
-          </label>
-          <button className='cursor-context-menu bg-[#e70d8c] text-white rounded px-5 py-3 transition-colors duration-200'>
+          </label> */}
+
+
+          <div className="Select py-2 bg-[#e70d8c] text-white rounded-lg">
+            <div 
+              className='child flex items-center justify-between'
+              onClick={() => setIsOpen(!isOpen)}>
+                { selectValue }
+                <span>
+                  <FaAngleDown className={ isOpen ? 'rotate-180 transition-all delay-75' : 'rotate-0' } />
+                </span>
+              </div>
+              {isOpen && (
+                <div>
+                  <ul className="flex flex-col divide-y border-t">
+                    <li className='child' onClick={() => { updateValue('Church') }}>Church</li>
+                    <li className='child' onClick={() => { updateValue('Traditional') }}>Traditional</li>
+                  </ul>
+                </div>
+              )}
+          </div>
+
+
+
+
+
+
+          <button className='cursor-help bg-[#e70d8c] text-white rounded-lg px-5 py-3 transition-colors duration-200 border-slate-300'>
             <span>Images</span>
           </button>
         </div>
         {loading && (
-          <div className="w-full max-w-md mt-4 flex flex-col items-center">
+          <div className="w-full max-w-md mt-2 flex flex-col items-center">
             <div className="bg-gray-200 rounded-full h-2.5 mb-2 w-full">
               <div className="bg-pink-300 h-2.5 rounded-full" style={{ width: `${progress}%` }}></div>
             </div>
-            <p className="text-center text-sm text-gray-600">{`Uploading... ${progress}%`}</p>
+            <p className="text-center text-sm text-gray-100">{`Uploading... ${progress}%`}</p>
           </div>
         )}
-        <div className="relative w-full max-w-7xl h-[80vh] md:h-[500px] md:max-h-none p-4 bg-pink-300 rounded-lg shadow-xl overflow-y-auto hide-scroll-bar">
-          {isFetchingMedia ? (
-            <div className="flex justify-center items-center h-full" style={{ height: '50vh' }}>
-              <Vortex
-                visible={true}
-                height="100%"
-                width="100"
-                ariaLabel="vortex-loading"
-                wrapperStyle={{}}
-                wrapperClass="vortex-wrapper"
-                colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
-                speed={1} // Adjust the speed property to reduce spinning time
-              />
+        <div className="relative w-full max-w-7xl h-[80vh] md:h-[500px] md:max-h-none px-4 pt-5 bg-pink-300 rounded-lg shadow-xl overflow-y-auto hide-scroll-bar ">
+          <div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
+            <button 
+              className={`${selectCat(selectedCategory === 'Church')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-300 rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
+              onClick={() => {
+                setSelectedCategory("Church");
+              }}
+            >
+              Church
+            </button>
+            <button
+              className={`${selectCat(selectedCategory === 'Traditional')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-300 rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
+              onClick={() => {
+                setSelectedCategory("Traditional");
+              }}
+            > Traditional2
+            </button>
           </div>
+          {isFetchingMedia ? (
+            <div className="flex flex-col justify-center items-center h-full" style={{ height: '50vh' }}>
+              <div className="w-full max-w-md mt-2 flex flex-col items-center">
+                <div className="bg-gray-200 rounded-full h-2.5 mb-2 w-full">
+                  <div className="bg-pink-300 h-2.5 rounded-full" style={{ width: `${fetchProgress}%` }}></div>
+                </div>
+                <p className="text-center text-sm text-gray-600">{`Fetching... ${fetchProgress}%`}</p>
+              </div>
+            </div>
           ) 
           : 
           (
@@ -210,10 +306,10 @@ const RecapWrapper = () => {
                   <div
                     key={index}
                     className="w-full h-auto cursor-pointer mx-auto overflow-hidden"
-                    onClick={() => setSelectedMediaIndex(index)} // Corrected line
+                    onClick={() => setSelectedMediaIndex(index)}
                   >
                     <img
-                      src={item.imgUrl}
+                      src={optimizedImage(item.imgUrl)}
                       alt={`media-${index}`}
                       className="w-full h-auto max-h-16 sm:max-h-32 object-cover rounded-lg bg-gray-400/50"
                     />
@@ -240,14 +336,14 @@ const RecapWrapper = () => {
               <button
                 className="relative left-[15%] text-3xl sm:text-5xl cursor-pointer text-gray-50 py-3 bg-gray-700 rounded-lg mr-2 sm:mr-0 z-20"
                 onClick={handlePrev}
-              > 
+              >
                 <FaChevronLeft />
               </button>
-              <NewCarousel ref={sliderRef} initialSlide={selectedMediaIndex}>
+              <NewCarousel ref={sliderRef}>
                 {mediaItems.map((item, index) => (
                   <NewImageCard
                     key={index}
-                    imageUrl={item.imgUrl} // Use imgUrl property from the fetched media items
+                    imageUrl={optimizedImage(item.imgUrl)} // Use Optimized imgUrl property from the fetched media items
                     altText="Placeholder image"
                     objectFit="contain" // Pass objectFit prop
                   />

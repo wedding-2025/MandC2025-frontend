@@ -30,3 +30,8 @@ dist-ssr
 Backend
 backend_new
 src/assets/images
+
+# Frontend folders/files
+src\wed-components\RECAP\Test
+src\wed-components\RECAP\aRecap.jsx
+src\wed-components\RECAP\recap.jsx

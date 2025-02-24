@@ -7,8 +7,8 @@ import SlideFromBottom from '../../Animations/SlideFromBottom';
 const WedHighlights = () => {
   const images = [
     {
-      ceremony: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1740372656/xmbhumfg1kdplgthcwgi.jpg',
-      reception: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1740373349/qlltds9fmzjxumc7ijeq.jpg',
+      ceremony: 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1740372656/xmbhumfg1kdplgthcwgi.jpg',
+      reception: 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto//v1740373349/qlltds9fmzjxumc7ijeq.jpg',
       // afterParty: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733822917/lyarhro3kzz0hpp8dvoz.png'
     }
   ]

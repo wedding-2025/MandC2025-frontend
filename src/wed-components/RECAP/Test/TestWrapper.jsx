@@ -281,7 +281,7 @@ const TestWrapper = () => {
               onClick={() => {
                 setSelectedCategory("Traditional");
               }}
-            > Traditional2
+            > Traditional
             </button>
           </div>
           {isFetchingMedia ? (

@@ -339,7 +339,7 @@ const TestWrapper = () => {
               >
                 <FaChevronLeft />
               </button>
-              <NewCarousel ref={sliderRef}>
+              <NewCarousel ref={sliderRef} initialSlide={selectedMediaIndex}>
                 {mediaItems.map((item, index) => (
                   <NewImageCard
                     key={index}

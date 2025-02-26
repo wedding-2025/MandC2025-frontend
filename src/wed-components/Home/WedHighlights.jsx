@@ -1,17 +1,14 @@
 import React from 'react';
-// import ceremony from '../../assets/images/ceremony.png';
-// import reception from '../../assets/images/reception.png';
-// import afterParty from '../../assets/images/afterParty.png';
+import { Link } from 'react-router-dom';
 import SlideFromBottom from '../../Animations/SlideFromBottom';
 
 const WedHighlights = () => {
   const images = [
     {
-      ceremony: 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1740372656/xmbhumfg1kdplgthcwgi.jpg',
-      reception: 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto//v1740373349/qlltds9fmzjxumc7ijeq.jpg',
-      // afterParty: 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733822917/lyarhro3kzz0hpp8dvoz.png'
+      church: 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1740372656/xmbhumfg1kdplgthcwgi.jpg',
+      traditional: 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto//v1740373349/qlltds9fmzjxumc7ijeq.jpg',
     }
-  ]
+  ];
 
   return (
     <>
@@ -30,6 +27,7 @@ const WedHighlights = () => {
             <SlideFromBottom>
               <div className="flex flex-col md:flex-row mt-10 md:mt-20 gap-10 md:gap-16 text-center md:text-left">
                 {/* CHURCH WEDDING */}
+                <Link to="/recap" className="w-full">
                   <div className="flex flex-col items-center md:items-start p-4 bg-red-300 border-2 border-gray-200 rounded-3xl shadow-md shadow-slate-600 w-full">
                     <h3 className="text-2xl font-bold text-slate-900 font-custom">Church Wedding</h3>
                     <p className="mt-4 text-lg leading-7 text-slate-900">
@@ -37,7 +35,7 @@ const WedHighlights = () => {
                     </p>
                     <div className="mt-6">
                       <img
-                        src={images[0].ceremony}
+                        src={images[0].church}
                         alt="Church Wedding"
                         className="object-cover w-full rounded-lg aspect-[4/3] bg-slate-100 bg-transparent"
                       />
@@ -46,7 +44,9 @@ const WedHighlights = () => {
                       Join us as we promise to love and cherish each other forever.
                     </p>
                   </div>
+                </Link>
                 {/* TRADITIONAL MARRIAGE */}
+                <Link to="/recap" className="w-full">
                   <div className="flex flex-col items-center md:items-start p-4 bg-red-300 border-2 border-gray-200 rounded-3xl shadow-md shadow-slate-600 w-full">
                     <h3 className="text-2xl font-bold text-slate-900 font-custom">Traditional Marriage</h3>
                     <p className="mt-4 text-lg leading-7 text-slate-900">
@@ -54,7 +54,7 @@ const WedHighlights = () => {
                     </p>
                     <div className="mt-6">
                       <img
-                        src={images[0].reception}
+                        src={images[0].traditional}
                         alt="Traditional Marriage"
                         className="object-cover w-full rounded-lg aspect-[4/3] bg-slate-100"
                       />
@@ -63,23 +63,7 @@ const WedHighlights = () => {
                       Dance, dine, and celebrate our love.
                     </p>
                   </div>
-                {/* AFTER PARTY */}
-                  {/* <div className="flex flex-col items-center md:items-start p-4 bg-red-300 border-2 border-gray-200 rounded-3xl shadow-md shadow-slate-600">
-                    <h3 className="text-2xl font-bold text-slate-900 font-custom">After Party</h3>
-                    <p className="mt-4 text-lg leading-7 text-slate-900">
-                      An unforgettable evening of fun and laughter, joy and love.
-                    </p>
-                    <div className="mt-6">
-                      <img
-                        src={images[0].afterParty}
-                        alt="After Party"
-                        className="object-cover w-full rounded-lg aspect-[4/3] bg-slate-100"
-                      />
-                    </div>
-                    <p className="text-base leading-7 text-slate-800 mt-4">
-                      Let's continue the celebration with music and joy.
-                    </p>
-                  </div> */}
+                </Link>
               </div>
             </SlideFromBottom>
           </div>

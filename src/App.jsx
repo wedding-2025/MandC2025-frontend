@@ -50,8 +50,8 @@ const RouteWrapper = ({ children })  => {
     // Allow a short delay before reloading, for smooth UX
     setTimeout(() => {
       window.location.reload();
-    }, 100); 
-    // 100ms delay
+    }, 5); 
+    // 5ms delay
   }
   };
 

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 // import { Vortex } from 'react-loader-spinner';
 import NewCarousel from './NewCarousel';
 import { NewImageCard } from './NewImageCard';
+import imageData from '../../../image.json'; // Import image.json
 
 const TestWrapper = () => {
   const [mediaItems, setMediaItems] = useState([]);
@@ -60,24 +61,12 @@ const TestWrapper = () => {
       return;
     }
 
-    try {
-      const res = await axios.get(`${BACKEND_URL}/api/media-items`, {
-        params: { category },
-        onDownloadProgress: (progressEvent) => {
-          const total = progressEvent.total;
-          const current = progressEvent.loaded;
-          const percentCompleted = Math.round((current / total) * 100);
-          setFetchProgress(percentCompleted);
-        },
-      });
-      setMediaItems(res.data);
-      cache[cacheKey] = res.data; // Store the fetched data in cache
-    } catch (error) {
-      console.error('Error fetching media items: ', error);
-      toast.error('Failed to fetch media items. Please try again.');
-    } finally {
-      setIsFetchingMedia(false);
-    }
+    // Filter data from image.json
+    const filteredData = imageData.filter(item => !category || item.category === category);
+    setMediaItems(filteredData);
+    cache[cacheKey] = filteredData; // Store the filtered data in cache
+
+    setIsFetchingMedia(false);
   };
 
   // Retrieving of uploaded image urls
@@ -133,6 +122,7 @@ const TestWrapper = () => {
           if (imgUrl) {
             uploadedMediaItems.push({ type: 'image', imgUrl });
             await axios.post(`${BACKEND_URL}/api/upload-url`, { imgUrl, category: selectValue });
+            await axios.post(`${BACKEND_URL}/api/update-image-json`, { imgUrl, category: selectValue }); // Update image.json
             toast.success(`Uploaded: ${file.name}`);
           }
         } else {
@@ -212,7 +202,7 @@ const TestWrapper = () => {
       }}
     >
       <div className="p-6 flex flex-col mx-auto items-center mt-0 bg-white/40 backdrop-blur-lg !z-20 mb-0 h-full w-full" style={{ opacity: '1', height: '100%' }}>
-        <div className=" flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto hidden">{/* Remove hidden to add flex */}
+        <div className="flex flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto">{/* Remove hidden to add flex */}
           <input
             type="file"
             id="file-upload"
@@ -311,7 +301,7 @@ const TestWrapper = () => {
                     <img
                       src={optimizedImage(item.imgUrl)}
                       alt={`media-${index}`}
-                      className="w-full h-auto max-h-16 sm:max-h-32 object-cover rounded-lg bg-gray-400/50"
+                      className="w-full h-16 sm:h-32 object-contain rounded-lg bg-gray-400/50"
                     />
                   </div>
                 ))
@@ -339,7 +329,7 @@ const TestWrapper = () => {
               >
                 <FaChevronLeft />
               </button>
-              <NewCarousel ref={sliderRef}>
+              <NewCarousel ref={sliderRef} initialSlide={selectedMediaIndex}>
                 {mediaItems.map((item, index) => (
                   <NewImageCard
                     key={index}

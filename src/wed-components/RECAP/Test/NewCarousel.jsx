@@ -10,6 +10,7 @@ const NewCarousel = forwardRef(({
   slidesToShowMobile = 1,
   autoplay = false,
   autoplaySpeed = 3000,
+  initialSlide = 0, // Add initialSlide prop
 }, ref) => {
   const settings = {
     dots: false,
@@ -22,6 +23,7 @@ const NewCarousel = forwardRef(({
     arrows: false,
     autoplay: autoplay,
     autoplaySpeed: autoplaySpeed,
+    initialSlide: initialSlide, // Use initialSlide prop
     responsive: [
       {
         breakpoint: 1000,

@@ -47,7 +47,7 @@ const Invited = () => {
       <div style={{ width: '100%', opacity: '1' }}>
         <div className="relative isolate overflow-hidden bg-[#7a0646] py-24 sm:py-32">
           <div className="absolute inset-0 opacity-20 -z-10 h-full w-full object-cover object-right md:object-center rounded-lg bg-slate-100" style={{ transform: 'none', opacity: '1', objectFit: 'none', background: 'transparent' }}>
-            <img src={ InvitedImg } alt="Design Image" className="absolute inset-0 opacity-20 -z-10 h-full w-full object-cover object-right md:object-center rounded-lg bg-slate-100" style={{ backgroundColor: 'transparent' }} />
+            <img src={ InvitedImg } alt="Design Image" className="absolute inset-0 opacity-20 -z-10 h-full w-full object-cover object-right md:object-center rounded-lg bg-slate-100" style={{ backgroundColor: 'transparent' }} loading='lazy' />
           </div>
 
           <div className="mx-auto max-w-7xl px-6 lg:px-8">

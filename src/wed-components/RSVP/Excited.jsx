@@ -15,7 +15,7 @@ const Excited = () => {
               <div className="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
                 <div className="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
                   <div className="absolute inset-0 h-full w-full rounded-2xl bg-slate-100 object-cover shadow-2xl" style={{ transform: 'none', opacity: '1', objectFit: 'none', background: 'transparent' }}>
-                    <img src={ Udomimi4 } alt="The couple" className="absolute inset-0 h-full w-full rounded-2xl bg-slate-100 object-cover shadow-2xl " style={{ backgroundColor: 'transparent' }} />
+                    <img src={ Udomimi4 } alt="The couple" loading='lazy' className="absolute inset-0 h-full w-full rounded-2xl bg-slate-100 object-cover shadow-2xl " style={{ backgroundColor: 'transparent' }} />
                   </div>
                 </div>
               </div>

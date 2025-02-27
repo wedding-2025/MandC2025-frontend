@@ -7,7 +7,8 @@ export const NewImageCard = ({ imageUrl, altText = "image"}) => {
           <img
             src={imageUrl}
             alt={altText}
-            className={`w-full h-full object-contain`} // Use objectFit prop for image properties
+            className={`w-full h-full object-contain`}
+            loading='lazy'
           />
         </div>
     </div>

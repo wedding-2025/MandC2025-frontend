@@ -38,6 +38,7 @@ const WedHighlights = () => {
                         src={images[0].church}
                         alt="Church Wedding"
                         className="object-cover w-full rounded-lg aspect-[4/3] bg-slate-100 bg-transparent"
+                        loading='lazy'
                       />
                     </div>
                     <p className="text-base leading-7 text-slate-800 mt-4">
@@ -57,6 +58,7 @@ const WedHighlights = () => {
                         src={images[0].traditional}
                         alt="Traditional Marriage"
                         className="object-cover w-full rounded-lg aspect-[4/3] bg-slate-100"
+                        loading='lazy'
                       />
                     </div>
                     <p className="text-base leading-7 text-slate-800 mt-4">

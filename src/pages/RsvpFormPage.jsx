@@ -14,19 +14,22 @@ const RsvpFormPage = () => {
       </Helmet>
 
 
-      <div className="bg-cover flex items-center justify-center p-6 hide-scroll-bar overflow-auto"
-        style={{
-          backgroundImage: `url(${RsvpBg})`,
-          opacity: '1',
-          width: '100%',
-          height: '100vh',
-          overflow: 'auto'
-        }}>
-        <div className="">
-          <div className="w-full max-w-screen-sm">
-            <div className="font-serif -z-10 overflow-Y-hidden h-full">
-              <div id='form-wrapper' className="flex flex-col items-center justify-center h-full max-w-screen-sm">
-                <NewRsvpForm />
+      <div style={{ width: '100%', height: '100vh' }}>
+        <div className="bg-cover flex items-center justify-center p-6 hide-scroll-bar overflow-auto"
+          style={{
+            backgroundImage: `url(${RsvpBg})`,
+            opacity: '1',
+            width: '100%',
+            height: '100%',
+            overflow: 'auto',
+            loading: 'lazy',
+          }}>
+          <div className="">
+            <div className="w-full max-w-screen-sm">
+              <div className="font-serif -z-10 overflow-Y-hidden h-full">
+                <div id='form-wrapper' className="flex flex-col items-center justify-center h-full max-w-screen-sm">
+                  <NewRsvpForm />
+                </div>
               </div>
             </div>
           </div>

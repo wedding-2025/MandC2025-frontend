@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-// import { Vortex } from 'react-loader-spinner';
+import { ProgressBar } from 'react-loader-spinner';
+import { InfinitySpin } from 'react-loader-spinner';
 import NewCarousel from './Carousel';
 import { NewImageCard } from './ImageCard';
 import imageJson from '../../../image.json'
@@ -13,10 +14,10 @@ const RecapWrapper = () => {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isFetchingMedia, setIsFetchingMedia] = useState(false);
-  const [fetchProgress, setFetchProgress] = useState(0);
   const fileInputRef = useRef(null);
   const sliderRef = useRef(null);
   const touchStartRef = useRef(null);
+  const [showAnimation, setShowAnimation] = useState(false);
 
   // For Drop Down in Upload
   const [isOpen, setIsOpen] = useState(false);
@@ -49,24 +50,29 @@ const RecapWrapper = () => {
   const cache = {}; // Initialize an in-memory cache
   // Fetch media items from the backend on component mount
   const fetchMediaItems = async (category = "") => {
+    setShowAnimation(true);
     setIsFetchingMedia(true);
-    setFetchProgress(0);
 
     const cacheKey = `media-items-${category || 'all'}`;
     
     // Check if data is in cache
     if (cache[cacheKey]) {
-      setMediaItems(cache[cacheKey]);
-      setIsFetchingMedia(false);
+      setTimeout(() => {
+        setMediaItems(cache[cacheKey]);
+        setIsFetchingMedia(false);
+        setShowAnimation(false);
+      }, 500); // Ensure the animation is shown for at least 1 second
       return;
     }
 
     // Access the imageData array from imageJson
     const filteredData = imageJson.imageData.filter(item => !category || item.category === category);
-    setMediaItems(filteredData);
-    cache[cacheKey] = filteredData; // Store the filtered data in cache
-
-    setIsFetchingMedia(false);
+    setTimeout(() => {
+      setMediaItems(filteredData);
+      cache[cacheKey] = filteredData; // Store the filtered data in cache
+      setIsFetchingMedia(false);
+      setShowAnimation(false);
+    }, 500); // Ensure the animation is shown for at least 1 second
   };
 
   // Retrieving of uploaded image urls
@@ -276,13 +282,14 @@ const RecapWrapper = () => {
             </button>
           </div>
           {isFetchingMedia ? (
-            <div className="flex flex-col justify-center items-center h-full" style={{ height: '50vh' }}>
-              <div className="w-full max-w-md mt-2 flex flex-col items-center">
-                <div className="bg-gray-200 rounded-full h-2.5 mb-2 w-full">
-                  <div className="bg-pink-300 h-2.5 rounded-full" style={{ width: `${fetchProgress}%` }}></div>
-                </div>
-                <p className="text-center text-sm text-gray-600">{`Fetching... ${fetchProgress}%`}</p>
-              </div>
+            <div className="flex justify-center items-center h-full">
+              <InfinitySpin
+                visible={true}
+                width="200"
+                // color="#4fa94d"
+                color='#e70d8c'
+                ariaLabel="infinity-spin-loading"
+              />
             </div>
           ) 
           : 
@@ -303,10 +310,24 @@ const RecapWrapper = () => {
                       src={optimizedImage(item.imgUrl)}
                       alt={`media-${index}`}
                       className="w-full h-16 sm:h-32 object-contain rounded-lg bg-gray-400/50"
+                      loading='lazy'
                     />
                   </div>
                 ))
               )}
+            </div>
+          )}
+          {showAnimation && (
+            <div className="flex justify-center items-center h-full">
+              <ProgressBar
+                visible={true}
+                height="80"
+                width="80"
+                color="#4fa94d"
+                ariaLabel="progress-bar-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
             </div>
           )}
         </div>

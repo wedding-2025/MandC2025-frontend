@@ -58,7 +58,7 @@ const RsvpNow = ({ scrollToContact }) => {
               </div>
               <div className="relative mt-16 h-80 lg:mt-8">
                 <div className="absolute left-0 top-0 w-[57rem] max-w-none rounded-2xl bg-slate-100 object-cover aspect-[16/9]" style={{ transform: 'none', opacity: '1', objectFit: 'none', background: 'transparent' }}>
-                  <img src={ RsvpImg } alt="Decorated image" className="absolute left-0 top-0 w-[57rem] h-auto max-w-none rounded-2xl bg-slate-100 object-cover aspect-[16/9]" style={{ backgroundColor: 'transparent' }} />
+                  <img src={ RsvpImg } loading='lazy' alt="Decorated image" className="absolute left-0 top-0 w-[57rem] h-auto max-w-none rounded-2xl bg-slate-100 object-cover aspect-[16/9]" style={{ backgroundColor: 'transparent' }} />
                 </div>
               </div>
             </div>

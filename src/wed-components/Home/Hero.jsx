@@ -51,7 +51,7 @@ const Hero = () => {
           <div className="absolute inset-0 w-full h-full">
             <div className="relative w-full h-full bg-inherit">
               <div className="w-full h-full opacity-70 bg-black/10 object-cover" datatype='image' style={{ transform: 'none', opacity: '1', objectFit: 'none', background: 'transparent', position: 'relative', borderRadius: 'inherit' }}>
-                <img src={ heroBg3 } alt="The couple's image background" className="w-full h-full opacity-80 bg-black/10 object-cover" style={{ background: 'transparent' }}/>
+                <img src={ heroBg3 } alt="The couple's image background" className="w-full h-full opacity-80 bg-black/10 object-cover" loading='lazy' style={{ background: 'transparent', loading: 'lazy' }}/>
               </div>
             </div>
           </div>

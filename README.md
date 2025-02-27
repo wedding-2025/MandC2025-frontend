@@ -7,7 +7,7 @@
 - [@MongoDB](https://cloud.mongodb.com/) for saving image metadata fetched from [@Cloudinary](https://cloudinary.com/)
 - Used JSON data to save fetched img metadata so as to reduce load time of fetching metadata from mongodb2
 
-- # visit site [m&c2025](https://mandc2025.org)
+- # visit site [MandC2025](https://mandc2025.org)
 
 - # Contact the developer on [@whatsapp](https://wa.me/message/CHA5YYYVU65EM1)
 

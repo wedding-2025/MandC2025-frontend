@@ -3,7 +3,7 @@
 - This is a complete function wedding website built with MERN stack and Cloudinary as a cloud storage.
 - Functional RSVP email
 - Functional Upload section with display properties
-- [@2Cloudinary](https://cloudinary.com/) cloud storage saves the uploaded image and
+- [@Cloudinary](https://cloudinary.com/) cloud storage saves the uploaded image and
 - [@MongoDB@](https://cloud.mongodb.com/) for saving image metadata fetched from [@Cloudinary](https://cloudinary.com/)
 - Used JSON data to save fetched img metadata so as to reduce load time of fetching metadata from mongodb2
 

@@ -4,7 +4,7 @@
 - Functional RSVP email
 - Functional Upload section with display properties
 - [@Cloudinary](https://cloudinary.com/) cloud storage saves the uploaded image and
-- [@MongoDB@](https://cloud.mongodb.com/) for saving image metadata fetched from [@Cloudinary](https://cloudinary.com/)
+- [@MongoDB](https://cloud.mongodb.com/) for saving image metadata fetched from [@Cloudinary](https://cloudinary.com/)
 - Used JSON data to save fetched img metadata so as to reduce load time of fetching metadata from mongodb2
 
 - # visit site [m&c2025](https://mandc2025.org)

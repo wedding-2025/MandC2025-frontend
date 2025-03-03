@@ -214,7 +214,7 @@ const RecapWrapper = () => {
       }}
     >
       <div className="p-6 flex flex-col mx-auto items-center mt-0 bg-white/40 backdrop-blur-lg !z-20 mb-0 h-full w-full" style={{ opacity: '1', height: '100%' }}>
-        <div className="hidden flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto">{/* Remove hidden to add flex (vise-versa) */}
+        <div className="flex flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto">{/* Remove hidden to add flex (vise-versa) */}
           <input
             type="file"
             id="file-upload"

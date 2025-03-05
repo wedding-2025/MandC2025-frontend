@@ -6,7 +6,7 @@ import React from 'react';
 
 const Hero = () => {
 
-  const heroBg3 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1733148696/itdzbmvn0zwsxxmcao80.jpg';
+  const heroBg3 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1733148696/itdzbmvn0zwsxxmcao80.webp';
 
   return (
     <>

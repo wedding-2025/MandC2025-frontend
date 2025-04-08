@@ -1,6 +1,6 @@
 # M & C 2025 Wedding Website 🎉
 
-<<<<<<< HEAD
+
 ![React](https://img.shields.io/badge/React-18.2.0-blue?style=flat-square&logo=react)
 ![Node.js](https://img.shields.io/badge/Node.js-16.0.0-green?style=flat-square&logo=node.js)
 ![MongoDB](https://img.shields.io/badge/MongoDB-5.0.0-brightgreen?style=flat-square&logo=mongodb)

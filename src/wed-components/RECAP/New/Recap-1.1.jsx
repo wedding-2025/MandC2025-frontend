@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { ProgressBar } from 'react-loader-spinner';
+// import { ProgressBar } from 'react-loader-spinner';
 import { InfinitySpin } from 'react-loader-spinner';
 import NewCarousel from './Carousel';
 import { NewImageCard } from './ImageCard';
@@ -216,7 +216,7 @@ const RecapWrapper = () => {
       }}
     >
       <div className="p-6 flex flex-col mx-auto items-center mt-0 bg-white/40 backdrop-blur-lg !z-20 mb-0 h-full w-full" style={{ opacity: '1', height: '100%' }}>
-        <div className="flex flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto">{/* Remove hidden to add flex (vise-versa) */}
+        <div className="hidden flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto">{/* Remove hidden to add flex (vise-versa) */}
           <input
             type="file"
             id="file-upload"
@@ -265,8 +265,27 @@ const RecapWrapper = () => {
             <p className="text-center text-sm text-gray-100">{`Uploading... ${progress}%`}</p>
           </div>
         )}
+
+<div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
+            <button 
+              className={`${selectCat(selectedCategory === 'Church')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
+              onClick={() => {
+                setSelectedCategory("Church");
+              }}
+            >
+              Church
+            </button>
+            <button
+              className={`${selectCat(selectedCategory === 'Traditional')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
+              onClick={() => {
+                setSelectedCategory("Traditional");
+              }}
+            > Traditional
+            </button>
+          </div>
+
         <div className="relative w-full max-w-7xl h-[80vh] md:h-[500px] md:max-h-none px-4 pt-5 bg-pink-300 rounded-lg shadow-xl overflow-y-auto hide-scroll-bar ">
-          <div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
+          {/* <div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
             <button 
               className={`${selectCat(selectedCategory === 'Church')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-300 rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
               onClick={() => {
@@ -282,7 +301,7 @@ const RecapWrapper = () => {
               }}
             > Traditional
             </button>
-          </div>
+          </div> */}
           {isFetchingMedia ? (
             <div className="flex justify-center items-center h-full">
               <InfinitySpin
@@ -319,7 +338,7 @@ const RecapWrapper = () => {
               )}
             </div>
           )}
-          {showAnimation && (
+          {/* {showAnimation && (
             <div className="flex justify-center items-center h-full">
               <ProgressBar
                 visible={true}
@@ -331,7 +350,7 @@ const RecapWrapper = () => {
                 wrapperClass=""
               />
             </div>
-          )}
+          )} */}
         </div>
         {/* Display Selected Media */}
         {selectedMediaIndex !== null && (

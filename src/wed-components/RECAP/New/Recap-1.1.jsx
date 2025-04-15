@@ -266,7 +266,7 @@ const RecapWrapper = () => {
           </div>
         )}
 
-<div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
+          <div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
             <button 
               className={`${selectCat(selectedCategory === 'Church')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
               onClick={() => {
@@ -284,7 +284,7 @@ const RecapWrapper = () => {
             </button>
           </div>
 
-        <div className="relative w-full max-w-7xl h-[80vh] md:h-[500px] md:max-h-none px-4 pt-5 bg-pink-300 rounded-lg shadow-xl overflow-y-auto hide-scroll-bar ">
+        <div className="relative w-full max-w-7xl h-[80vh] md:h-full md:max-h-none px-4 pt-5 bg-pink-300 rounded-lg shadow-xl overflow-y-auto hide-scroll-bar ">
           {/* <div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
             <button 
               className={`${selectCat(selectedCategory === 'Church')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-300 rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
@@ -303,12 +303,12 @@ const RecapWrapper = () => {
             </button>
           </div> */}
           {isFetchingMedia ? (
-            <div className="flex justify-center items-center h-full">
+            <div className="flex justify-center md:ml-[22%] items-center h-full">
               <InfinitySpin
                 visible={true}
-                width="200"
+                width="500"
                 // color="#4fa94d"
-                color='#e70d8c'
+                color='#920859'
                 ariaLabel="infinity-spin-loading"
               />
             </div>
@@ -322,17 +322,19 @@ const RecapWrapper = () => {
                 </p>
               ) : (
                 mediaItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className="w-full h-auto cursor-pointer mx-auto overflow-hidden"
-                    onClick={() => setSelectedMediaIndex(index)}
-                  >
-                    <img
-                      src={optimizedImage(item.imgUrl)}
-                      alt={`media-${index}`}
-                      className="w-full h-16 sm:h-32 object-contain rounded-lg bg-gray-400/50"
-                      loading='lazy'
-                    />
+                  <div className='border border-gray-700 rounded-lg bg-gray-400/50'>
+                    <div
+                      key={index}
+                      className="w-full h-auto cursor-pointer mx-auto overflow-hidden"
+                      onClick={() => setSelectedMediaIndex(index)}
+                    >
+                      <img
+                        src={optimizedImage(item.imgUrl)}
+                        alt={`media-${index}`}
+                        className="w-full h-24 sm:h-max object-contain rounded-lg border border-b-gray-900"
+                        loading='lazy'
+                      />
+                    </div>
                   </div>
                 ))
               )}
@@ -356,18 +358,18 @@ const RecapWrapper = () => {
         {selectedMediaIndex !== null && (
           <div className='fixed inset-0 z-50 w-full h-full flex items-center justify-center bg-black/70 backdrop-blur-md'>
             <div
-              className="relative w-full max-w-7xl h-auto p-4 rounded-lg overflow-hidden my-auto mx-auto flex items-center justify-center"
+              className="relative w-full h-full p-4 rounded-lg overflow-hidden my-auto mx-auto flex items-center justify-center"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
             >
               <button
-                className="absolute left-4 top-6 sm:top-[5rem] px-3 py-2 text-base bg-gray-50 text-gray-900 rounded-xl shadow-xl border-2 border-gray-600 cursor-pointer z-20"
+                className="absolute left-4 top-20 sm:top-[5rem] px-3 py-2 text-base bg-gray-50 text-gray-900 rounded-xl shadow-xl border-2 border-gray-600 cursor-pointer z-20"
                 onClick={() => setSelectedMediaIndex(null)}
               >
                 Close
               </button>
               <button
-                className="relative left-[15%] text-3xl sm:text-5xl cursor-pointer text-gray-50 py-3 bg-gray-700 rounded-lg mr-2 sm:mr-0 z-20"
+                className="relative left-[77px] text-3xl sm:text-5xl cursor-pointer text-gray-50 py-3 bg-gray-700 rounded-lg mr-2 sm:mr-0 z-20"
                 onClick={handlePrev}
               >
                 <FaChevronLeft />
@@ -376,6 +378,7 @@ const RecapWrapper = () => {
                 {mediaItems.map((item, index) => (
                   <NewImageCard
                     key={index}
+                    className="w-full full"
                     imageUrl={optimizedImage(item.imgUrl)} // Use Optimized imgUrl property from the fetched media items
                     altText="Placeholder image"
                     objectFit="contain" // Pass objectFit prop
@@ -383,7 +386,7 @@ const RecapWrapper = () => {
                 ))}
               </NewCarousel>
               <button
-                className="relative right-[15%] text-3xl sm:text-5xl cursor-pointer text-gray-50 py-3 bg-gray-700 rounded-lg ml-2 sm:mr-0"
+                className="relative right-[77px] text-3xl sm:text-5xl cursor-pointer text-gray-50 py-3 bg-gray-700 rounded-lg ml-2 sm:mr-0"
                 onClick={handleNext}
               >
                 <FaChevronRight />

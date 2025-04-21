@@ -96,7 +96,8 @@ const NewRsvpForm = () => {
 
   const handleSubmit = async (event) => {
     // const BACKEND_URL = 'http://localhost:3500';
-    const BACKEND_URL = import.meta.env.VITE_EMAIL_BACKEND_URL;
+    // const BACKEND_URL = import.meta.env.VITE_EMAIL_BACKEND_URL;
+    const BACKEND_URL = 'https://server-rsvp-email.onrender.com';
     
     event.preventDefault(); // Prevent default form behavior
     const startTime = performance.now(); // Start timing

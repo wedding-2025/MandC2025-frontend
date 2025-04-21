@@ -32,7 +32,8 @@ backend_new
 src/assets/images
 
 # Frontend folders/files
-./image.json
-src\wed-components\RECAP\Test
-src\wed-components\RECAP\aRecap.jsx
-src\wed-components\RECAP\recap.jsx
+image.json
+src/wed-components/RECAP/Test
+src/wed-components/RECAP/aRecap.jsx
+src/wed-components/RECAP/recap.jsx
+src/wed-components/RECAP/New/Later.jsx

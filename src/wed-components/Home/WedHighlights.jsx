@@ -10,6 +10,17 @@ const WedHighlights = () => {
     }
   ];
 
+  const optimizeAndPreload = (url) => {
+    const optimizedUrl = url
+      .replace("/upload/", "/upload/f_auto,q_auto,w_auto,fl_strip_profile/")
+      .replace(/\.(png|jpe?g|gif)/i, '.avif' || '.webp');
+  
+    const img = new Image();
+    img.src = optimizedUrl;
+  
+    return optimizedUrl;
+  };
+
   return (
     <>
       <div style={{ width: '100%', opacity: '1' }}>
@@ -35,7 +46,7 @@ const WedHighlights = () => {
                     </p>
                     <div className="mt-6">
                       <img
-                        src={images[0].church}
+                        src={optimizeAndPreload(images[0].church)}
                         alt="Church Wedding"
                         className="object-cover w-full rounded-lg aspect-[4/3] bg-slate-100 bg-transparent"
                         loading='lazy'
@@ -55,7 +66,7 @@ const WedHighlights = () => {
                     </p>
                     <div className="mt-6">
                       <img
-                        src={images[0].traditional}
+                        src={optimizeAndPreload(images[0].traditional)}
                         alt="Traditional Marriage"
                         className="object-cover w-full rounded-lg aspect-[4/3] bg-slate-100"
                         loading='lazy'

@@ -15,7 +15,7 @@ const NewCarousel = forwardRef(({
   const settings = {
     dots: false,
     infinite: true,
-    speed: 500,
+    speed: 300, // Reduced speed for faster swiping
     slidesToShow: slidesToShow,
     slidesToScroll: 1,
     swipeToSlide: true,

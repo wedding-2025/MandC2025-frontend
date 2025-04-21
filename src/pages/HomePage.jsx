@@ -3,10 +3,11 @@ import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Hero from '../wed-components/Home/Hero';
 import WedHighlights from '../wed-components/Home/WedHighlights';
-import Gallery from '../wed-components/Home/Gallery';
+// import Gallery from '../wed-components/Home/Gallery';
 import OurJourney from '../wed-components/Home/OurJourney';
 import RsvpOurWed from '../wed-components/Home/RsvpOurWed';
 import WedContact from '../wed-components/Home/WedContact';
+import YouT from '../wed-components/Home/YouT';
 
 const HomePage = ({ contactRef }) => {
   // const contactRef = useRef(null);
@@ -44,7 +45,8 @@ const HomePage = ({ contactRef }) => {
 
       <Hero />
       <WedHighlights />
-      <Gallery />
+      {/* <Gallery /> */}
+      <YouT />
       <OurJourney />
       <RsvpOurWed />
       <div ref={contactRef}>

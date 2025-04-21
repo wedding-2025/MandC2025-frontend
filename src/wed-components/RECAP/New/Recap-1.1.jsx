@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-// import { ProgressBar } from 'react-loader-spinner';
 import { InfinitySpin } from 'react-loader-spinner';
 import NewCarousel from './Carousel';
 import { NewImageCard } from './ImageCard';
@@ -18,6 +17,18 @@ const RecapWrapper = () => {
   const sliderRef = useRef(null);
   const touchStartRef = useRef(null);
   const [showAnimation, setShowAnimation] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [totalImages, setTotalImages] = useState(0);
+  const [categoryCounts, setCategoryCounts] = useState({
+    Church: 0,
+    Traditional: 0
+  });
+  const [placeholderContainers, setPlaceholderContainers] = useState([]);
+  
+  // Debounce timeout ref
+  const debounceTimeoutRef = useRef(null);
+  // Track if category switch is in progress
+  const [isSwitchingCategory, setIsSwitchingCategory] = useState(false);
 
   // For Drop Down in Upload
   const [isOpen, setIsOpen] = useState(false);
@@ -33,61 +44,203 @@ const RecapWrapper = () => {
     }
   };
 
-  // End of Drop Down in Upload
-
-
   // For Image Category (Church and Traditional)
   const [selectedCategory, setSelectedCategory] = useState("Traditional");
 
-  // End of Image Category
-
   const recapImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qeoxjv1jmforzrjch0vw.png';
 
-  // Declared fetchMediaItems() to be a global function to make accessible
-
   const BACKEND_URL = import.meta.env.VITE_RECAP_BACKEND_URL;
-  // const BACKEND_URL = 'http://localhost:4000';
-  const cache = {}; // Initialize an in-memory cache
-  // Fetch media items from the backend on component mount
+  const CACHE_VERSION = 'v1'; // Update this when your image structure changes
+  
+  // Count images in each category and create placeholder containers
+  const processImageData = (data) => {
+    // Count images by category
+    const counts = data.reduce((acc, item) => {
+      acc[item.category] = (acc[item.category] || 0) + 1;
+      return acc;
+    }, {});
+    
+    // Store counts in state
+    setCategoryCounts(prevCounts => ({
+      ...prevCounts,
+      ...counts
+    }));
+    
+    // Save category counts to localStorage for faster subsequent loads
+    try {
+      localStorage.setItem('category-counts', JSON.stringify(counts));
+    } catch (e) {
+      console.error('Error saving category counts to localStorage:', e);
+    }
+    
+    return counts;
+  };
+  
+  // Create placeholders based on category counts
+  const createPlaceholders = (count) => {
+    const placeholders = Array(count).fill(null).map((_, index) => ({
+      id: `placeholder-${index}`,
+      isPlaceholder: true
+    }));
+    setPlaceholderContainers(placeholders);
+    return placeholders;
+  };
+  
+  // This function preloads all images for faster display
+  const preloadImages = (imageUrls) => {
+    setTotalImages(imageUrls.length);
+    setImagesLoaded(0);
+    
+    return Promise.all(imageUrls.map(item => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          setImagesLoaded(prev => prev + 1);
+          resolve();
+        };
+        img.onerror = reject;
+        img.src = optimizedImage(item.imgUrl);
+      });
+    }));
+  };
+  
+  // Check localStorage for category counts on component mount
+  useEffect(() => {
+    try {
+      const storedCounts = localStorage.getItem('category-counts');
+      if (storedCounts) {
+        const counts = JSON.parse(storedCounts);
+        setCategoryCounts(prevCounts => ({
+          ...prevCounts,
+          ...counts
+        }));
+      }
+    } catch (e) {
+      console.error('Error loading category counts from localStorage:', e);
+    }
+  }, []);
+  
+  // Function to fetch media items from localStorage or image.json
   const fetchMediaItems = async (category = "") => {
     setShowAnimation(true);
     setIsFetchingMedia(true);
 
-    const cacheKey = `media-items-${category || 'all'}`;
+    const cacheKey = `media-items-${category || 'all'}-${CACHE_VERSION}`;
+    const storageTimestampKey = `media-items-timestamp-${CACHE_VERSION}`;
+    const CACHE_EXPIRY = 48 * 60 * 60 * 1000; // 48 hours in milliseconds
     
-    // Check if data is in cache
-    if (cache[cacheKey]) {
-      setTimeout(() => {
-        setMediaItems(cache[cacheKey]);
+    try {
+      // Before fetching, create placeholders based on either:
+      // 1. Current category count if available, or
+      // 2. A default number
+      const categoryCount = categoryCounts[category] || 0;
+      if (categoryCount > 0) {
+        createPlaceholders(categoryCount);
+      }
+      
+      // Check localStorage first
+      const cachedData = localStorage.getItem(cacheKey);
+      const cachedTimestamp = localStorage.getItem(storageTimestampKey);
+      const now = new Date().getTime();
+      
+      // If we have valid cached data that's not expired
+      if (cachedData && cachedTimestamp && (now - parseInt(cachedTimestamp) < CACHE_EXPIRY)) {
+        const parsedData = JSON.parse(cachedData);
+        
+        // Create placeholders with accurate count
+        createPlaceholders(parsedData.length);
+        
+        // Process image data to update category counts
+        processImageData(parsedData);
+        
+        // Set the media items from cache
+        setMediaItems(parsedData);
+        
+        // Preload the images in the background for smoother experience
+        preloadImages(parsedData).catch(err => console.error('Error preloading images:', err));
+        
         setIsFetchingMedia(false);
         setShowAnimation(false);
-      }, 500); // Ensure the animation is shown for at least 1 second
-      return;
-    }
-
-    // Access the imageData array from imageJson
-    const filteredData = imageJson.imageData.filter(item => !category || item.category === category);
-    setTimeout(() => {
+        return;
+      }
+      
+      // If no cache or expired, filter data from imageJson
+      const filteredData = imageJson.imageData.filter(item => !category || item.category === category);
+      
+      // Create placeholders with accurate count
+      createPlaceholders(filteredData.length);
+      
+      // Process image data to update category counts
+      processImageData(imageJson.imageData);
+      
+      // Store in localStorage for future use
+      localStorage.setItem(cacheKey, JSON.stringify(filteredData));
+      localStorage.setItem(storageTimestampKey, new Date().getTime().toString());
+      
+      // Preload images before setting the media items
+      await preloadImages(filteredData);
+      
       setMediaItems(filteredData);
-      cache[cacheKey] = filteredData; // Store the filtered data in cache
       setIsFetchingMedia(false);
       setShowAnimation(false);
-    }, 500); // Ensure the animation is shown for at least 1 second
+      
+    } catch (error) {
+      console.error('Error fetching or caching media items:', error);
+      // Fallback to the original data fetching
+      const filteredData = imageJson.imageData.filter(item => !category || item.category === category);
+      processImageData(imageJson.imageData);
+      createPlaceholders(filteredData.length);
+      setMediaItems(filteredData);
+      setIsFetchingMedia(false);
+      setShowAnimation(false);
+    } finally {
+      // Ensure we reset the switching state
+      setIsSwitchingCategory(false);
+    }
   };
 
-  // Retrieving of uploaded image urls
+  // Modified version: Load media items with debouncing when category changes
   useEffect(() => {
-    fetchMediaItems(selectedCategory);
-  }, [selectedCategory]);
+    // Only trigger fetch if switching is in progress
+    if (isSwitchingCategory) {
+      // Clear any existing timeout
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+      
+      // Set a timeout before fetching to debounce rapid category changes
+      debounceTimeoutRef.current = setTimeout(() => {
+        fetchMediaItems(selectedCategory);
+      }, 100); // 100ms debounce time
+    }
+    
+    // Clean up timeout on unmount or when dependency changes again
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, [selectedCategory, isSwitchingCategory]);
+
+  // Initial load
+  useEffect(() => {
+    // Trigger initial fetch
+    setIsSwitchingCategory(true);
+  }, []);
+
+  // Preload the background image
+  useEffect(() => {
+    const bgImg = new Image();
+    bgImg.src = optimizedImage(recapImg);
+  }, []);
 
   const uploadFile = async (file) => {
     const data = new FormData();
     data.append('file', file);
-    data.append('upload_preset', 'mandc_default_img'); // Ensure this upload preset is correctly set up in Cloudinary
+    data.append('upload_preset', 'mandc_default_img');
 
     try {
-      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME; // Ensure this is correctly set in your environment variables
-      console.log(cloudName);
+      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
       const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
       const res = await axios.post(api, data, {
@@ -98,7 +251,6 @@ const RecapWrapper = () => {
       });
 
       const { secure_url } = res.data;
-      console.log(secure_url);
       return secure_url;
     } catch (error) {
       console.error('Cloudinary upload error:', error.response ? error.response.data : error);
@@ -122,15 +274,28 @@ const RecapWrapper = () => {
           // Skip duplicate media
           if (mediaItems.some(item => item.imgUrl === imgUrl)) {
             toast.warn('Duplicate media detected, skipping...');
-            continue; // Move to the next file
+            continue;
           }
       
           if (imgUrl) {
-            uploadedMediaItems.push({ type: 'image', imgUrl });
+            uploadedMediaItems.push({ type: 'image', imgUrl, category: selectValue });
             await axios.post(`${BACKEND_URL}/api/upload-url`, { imgUrl, category: selectValue });
             try {
-              console.log('Updating image.json with:', { imgUrl, category: selectValue });
-              await axios.post(`${BACKEND_URL}/api/update-image-json`, { imgUrl, category: selectValue }); // Update image.json
+              await axios.post(`${BACKEND_URL}/api/update-image-json`, { imgUrl, category: selectValue });
+              
+              // Update category counts
+              setCategoryCounts(prev => ({
+                ...prev,
+                [selectValue]: (prev[selectValue] || 0) + 1
+              }));
+              
+              // Clear localStorage cache after uploading new images
+              for (const key of Object.keys(localStorage)) {
+                if (key.startsWith('media-items-')) {
+                  localStorage.removeItem(key);
+                }
+              }
+              
               toast.success(`Uploaded: ${file.name}`);
             } catch (error) {
               console.error('Error updating image.json:', error);
@@ -149,7 +314,7 @@ const RecapWrapper = () => {
     } finally {
       setLoading(false);
       setProgress(0);
-      fileInputRef.current.value = ''; // Reset file input
+      fileInputRef.current.value = '';
     }
   };
 
@@ -191,12 +356,31 @@ const RecapWrapper = () => {
   // Optimized Images from Cloudinary
   const optimizedImage = (url) => {
     return url
-      .replace("/upload/", "/upload/f_webp,q_auto,w_auto/")
-      .replace(/\.(png|jpe?g|gif)/i, ".webp");
-  };  
+      .replace("/upload/", "/upload/f_auto,q_auto,w_auto,fl_strip_profile/")
+      .replace(/\.(png|jpe?g|gif)/i, '.avif' || '.webp');
+  }; 
 
+  // Enhanced category switching function with debouncing
+  const handleCategorySwitch = (category) => {
+    // Don't do anything if it's the same category or we're already in the process of switching
+    if (category === selectedCategory || isSwitchingCategory) {
+      return;
+    }
+    
+    // Set the category but also trigger the loading state
+    setSelectedCategory(category);
+    setIsSwitchingCategory(true);
+    setIsFetchingMedia(true);
+    setShowAnimation(true);
+    
+    // Create placeholders based on known category count
+    const categoryCount = categoryCounts[category] || 0;
+    if (categoryCount > 0) {
+      createPlaceholders(categoryCount);
+    }
+  };
 
-  // Category button
+  // Category button style
   const selectCat = (isActive) => {
     return isActive ? 'bg-[#e70d8c] text-gray-50 hover:text-gray-800' : 'bg-[#f1ecec]';
   };
@@ -216,7 +400,7 @@ const RecapWrapper = () => {
       }}
     >
       <div className="p-6 flex flex-col mx-auto items-center mt-0 bg-white/40 backdrop-blur-lg !z-20 mb-0 h-full w-full" style={{ opacity: '1', height: '100%' }}>
-        <div className="hidden flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto">{/* Remove hidden to add flex (vise-versa) */}
+        <div className="hidden flex-row-reverse items-center justify-center space-x-6 mb-5 mx-auto"> {/* Change from hidden to flex, vise-versa */}
           <input
             type="file"
             id="file-upload"
@@ -226,13 +410,6 @@ const RecapWrapper = () => {
             className="hidden"
             onChange={handleFileUpload}
           />
-          {/* <label
-            onClick={() => fileInputRef.current && fileInputRef.current.click()}
-            className="cursor-pointer bg-[#e70d8c] text-white rounded px-5 py-3 hover:bg-pink-400 transition-colors duration-200 hidden"
-          >
-            Upload
-          </label> */}
-
 
           <div className="Select py-2 bg-[#e70d8c] text-white rounded-lg">
             <div 
@@ -266,65 +443,58 @@ const RecapWrapper = () => {
           </div>
         )}
 
-          <div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
-            <button 
-              className={`${selectCat(selectedCategory === 'Church')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
-              onClick={() => {
-                setSelectedCategory("Church");
-              }}
-            >
-              Church
-            </button>
-            <button
-              className={`${selectCat(selectedCategory === 'Traditional')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
-              onClick={() => {
-                setSelectedCategory("Traditional");
-              }}
-            > Traditional
-            </button>
-          </div>
+        <div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
+          <button 
+            className={`${selectCat(selectedCategory === 'Church')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-300 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
+            onClick={() => handleCategorySwitch('Church')}
+            disabled={isSwitchingCategory}
+          >
+            Church {/* ({categoryCounts.Church || 0}) */}
+          </button>
+          <button
+            className={`${selectCat(selectedCategory === 'Traditional')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-300 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
+            onClick={() => handleCategorySwitch('Traditional')}
+            disabled={isSwitchingCategory}
+          > Traditional {/* ({categoryCounts.Traditional || 0}) */}
+          </button>
+        </div>
 
-        <div className="relative w-full max-w-7xl h-[80vh] md:h-full md:max-h-none px-4 pt-5 bg-pink-300 rounded-lg shadow-xl overflow-y-auto hide-scroll-bar ">
-          {/* <div className='flex flex-row items-center justify-center gap-20 p-0 pb-4'>
-            <button 
-              className={`${selectCat(selectedCategory === 'Church')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-300 rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
-              onClick={() => {
-                setSelectedCategory("Church");
-              }}
-            >
-              Church
-            </button>
-            <button
-              className={`${selectCat(selectedCategory === 'Traditional')} inline-flex items-center justify-center font-medium border py-1.5 px-5 focus:outline-none hover:bg-slate-300 rounded-lg text-base sm:text-xl 2xl:text-2xl transition-all ease-in-out duration-0 border-slate-900 shadow-md shadow-gray-500 font-gFont1`}
-              onClick={() => {
-                setSelectedCategory("Traditional");
-              }}
-            > Traditional
-            </button>
-          </div> */}
+        <div className="relative w-full max-w-7xl h-[80vh] md:h-full md:max-h-none px-4 pt-5 bg-pink-300 rounded-lg shadow-xl overflow-y-auto hide-scroll-bar">
           {isFetchingMedia ? (
-            <div className="flex justify-center md:ml-[22%] items-center h-full">
-              <InfinitySpin
-                visible={true}
-                width="500"
-                // color="#4fa94d"
-                color='#920859'
-                ariaLabel="infinity-spin-loading"
-              />
+            <div>
+              {/* Show placeholder containers while images are loading */}
+              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 mt-1 overflow-x-hidden">
+                {placeholderContainers.map((item, index) => (
+                  <div key={`placeholder-${index}`} className='border border-gray-700 rounded-lg bg-gray-400/50 animate-pulse'>
+                    <div className="w-full h-24 sm:h-32 rounded-lg"></div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex flex-col justify-center items-center mt-4">
+                <InfinitySpin
+                  visible={true}
+                  width="200"
+                  color='#920859'
+                  ariaLabel="infinity-spin-loading"
+                />
+                {totalImages > 0 && (
+                  <p className="mt-4 text-gray-700">Loading images: {imagesLoaded} of {totalImages}</p>
+                )}
+              </div>
             </div>
           ) 
           : 
           (
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 mt-1 overflow-x-hidden">
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 my-2 overflow-x-hidden">
               {mediaItems.length === 0 ? (
-                <p className="text-gray-500 text-center w-full">
-                  No media items available.
+                <p className="text-gray-500 text-center w-full col-span-full">
+                  No media items available in this category.
                 </p>
               ) : (
                 mediaItems.map((item, index) => (
-                  <div className='border border-gray-700 rounded-lg bg-gray-400/50'>
+                  <div key={index} className='border border-gray-700 rounded-lg bg-gray-400/50'>
                     <div
-                      key={index}
                       className="w-full h-auto cursor-pointer mx-auto overflow-hidden"
                       onClick={() => setSelectedMediaIndex(index)}
                     >
@@ -340,20 +510,8 @@ const RecapWrapper = () => {
               )}
             </div>
           )}
-          {/* {showAnimation && (
-            <div className="flex justify-center items-center h-full">
-              <ProgressBar
-                visible={true}
-                height="80"
-                width="80"
-                color="#4fa94d"
-                ariaLabel="progress-bar-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-              />
-            </div>
-          )} */}
         </div>
+        
         {/* Display Selected Media */}
         {selectedMediaIndex !== null && (
           <div className='fixed inset-0 z-50 w-full h-full flex items-center justify-center bg-black/70 backdrop-blur-md'>
@@ -379,9 +537,9 @@ const RecapWrapper = () => {
                   <NewImageCard
                     key={index}
                     className="w-full full"
-                    imageUrl={optimizedImage(item.imgUrl)} // Use Optimized imgUrl property from the fetched media items
+                    imageUrl={optimizedImage(item.imgUrl)}
                     altText="Placeholder image"
-                    objectFit="contain" // Pass objectFit prop
+                    objectFit="contain"
                   />
                 ))}
               </NewCarousel>

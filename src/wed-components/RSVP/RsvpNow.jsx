@@ -2,12 +2,12 @@ import React from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import SomeSvg from './SomeSvg';
 import { FaEnvelope } from 'react-icons/fa';
-// import RsvpImg from '../../assets/images/RsvpImg.jpeg';
+import RsvpImg from '../../assets/img/RsvpImg.webp';
 import SlideFromLeft from '../../Animations/SlideFromLeft';
 import SlideFromRight from '../../Animations/SlideFromRight';
 
 const RsvpNow = ({ scrollToContact }) => {
-  const RsvpImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482103/lqlzx6wajpgarq369aa1.jpg';
+  // const RsvpImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482103/lqlzx6wajpgarq369aa1.jpg';
 
   const navigate = useNavigate();
   const location = useLocation();

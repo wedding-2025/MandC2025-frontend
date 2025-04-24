@@ -5,7 +5,7 @@ const YouT = () => {
   return (
     <section id='youtube-link' className='bg-[#facccf]'>
       <div className='w-full h-full flex items-center justify-between'>
-        <div className='w-full h-full flex items-center justify-center py-5'>
+        <div className='w-full h-full flex items-center justify-center px-5 md:px-0 py-5'>
           <iframe 
             className='rounded-lg shadow-lg shadow-gray-500 w-full max-w-[400px] h-[250px] md:max-w-2xl md:h-[400px] lg:max-w-5xl lg:h-[520px] xl:max-w-6xl'
             src="https://www.youtube.com/embed/4k0qWbsXxhM?si=towBFtfBdbQiCjkd"

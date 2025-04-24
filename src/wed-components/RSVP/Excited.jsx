@@ -1,10 +1,10 @@
 import React from 'react';
-// import Udomimi4 from '../../assets/images/Udomimi4.png';
+import Udomimi4 from '../../assets/img/Udomimi4.webp';
 import BigQuote from './BigQuote';
 import SlideFromRight from '../../Animations/SlideFromRight';
 
 const Excited = () => {
-  const Udomimi4 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482104/oxaopamjbi7bulpoybhz.jpg';
+  // const Udomimi4 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482104/oxaopamjbi7bulpoybhz.jpg';
 
   return (
     <>

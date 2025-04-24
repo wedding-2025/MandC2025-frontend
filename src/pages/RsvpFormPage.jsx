@@ -1,10 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import NewRsvpForm from '../wed-components/RSVP/NewRsvpForm';
-// import RsvpBg from '../assets/images/RsvpBg.png';
+import RsvpBg from '../assets/img/RsvpBg.webp';
 
 const RsvpFormPage = () => {
-  const RsvpBg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1733482103/roxfysaaqpcy4e6z6smb.webp';
+  // const RsvpBg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1733482103/roxfysaaqpcy4e6z6smb.webp';
 
   return (
     <>

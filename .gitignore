@@ -37,3 +37,10 @@ src/wed-components/RECAP/Test
 src/wed-components/RECAP/aRecap.jsx
 src/wed-components/RECAP/recap.jsx
 src/wed-components/RECAP/New/Later.jsx
+
+# Optimization folders
+convertImages.js
+public/Images
+public/ima
+src\assets\optimized-images
+src\assets\convert.js

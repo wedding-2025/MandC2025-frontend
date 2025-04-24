@@ -1,23 +1,24 @@
 import React from 'react';
-// import heroBg3 from '../../assets/images/heroBg3.jpeg';
+import heroBg from '../../assets/img/heros copy.webp';
 // import CountDown from './CountDown';
 
 //background image is hero-bg
 
 const Hero = () => {
 
-  let heroBg3 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733148696/itdzbmvn0zwsxxmcao80.webp';
+  // let heroBg3 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733148696/itdzbmvn0zwsxxmcao80.jpg';
+  // https://res.cloudinary.com/dzsuia2ia/image/upload/v1733837769/isowgiterxtyb87ixrsz.jpg
 
-  const optimizeAndPreload = (url) => {
-    const optimizedUrl = url
-      .replace("/upload/", "/upload/f_auto,q_auto,w_auto,fl_strip_profile/")
-      .replace(/\.(png|jpe?g|gif)/i, '.avif' || '.webp');
+  // const optimizeAndPreload = (url) => {
+  //   const optimizedUrl = url
+  //     .replace("/upload/", "/upload/f_auto,q_auto,w_auto,fl_strip_profile/")
+  //     .replace(/\.(png|jpe?g|gif)/i, '.avif' || '.webp');
   
-    const img = new Image();
-    img.src = optimizedUrl;
+  //   const img = new Image();
+  //   img.src = optimizedUrl;
   
-    return optimizedUrl;
-  };
+  //   return optimizedUrl;
+  // };
 
   return (
     <>
@@ -62,7 +63,7 @@ const Hero = () => {
           <div className="absolute inset-0 w-full h-full">
             <div className="relative w-full h-full bg-inherit">
               <div className="w-full h-full opacity-70 bg-black/10 object-cover" datatype='image' style={{ transform: 'none', opacity: '1', objectFit: 'none', background: 'transparent', position: 'relative', borderRadius: 'inherit' }}>
-                <img src={optimizeAndPreload(heroBg3)} alt="The couple's image background" className="w-full h-full opacity-80 bg-black/10 object-cover" loading='lazy' style={{ background: 'transparent', loading: 'lazy' }}/>
+                <img src={heroBg} alt="The couple's image background" className="w-full h-full opacity-80 bg-black/10 object-cover" loading='lazy' style={{ background: 'transparent', loading: 'lazy' }}/>
               </div>
             </div>
           </div>

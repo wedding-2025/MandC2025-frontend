@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaAngleDown } from 'react-icons/fa';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { InfinitySpin } from 'react-loader-spinner';
 import NewCarousel from './Carousel';
 import { NewImageCard } from './ImageCard';
-import imageJson from '../../../image.json'
 
 const RecapWrapper = () => {
   const [mediaItems, setMediaItems] = useState([]);
@@ -47,9 +45,11 @@ const RecapWrapper = () => {
   // For Image Category (Church and Traditional)
   const [selectedCategory, setSelectedCategory] = useState("Traditional");
 
+  // Replace recapImg with local path
+  // const recapImg = '/optimized-images/recap-bg.webp';
   const recapImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qeoxjv1jmforzrjch0vw.png';
 
-  const BACKEND_URL = import.meta.env.VITE_RECAP_BACKEND_URL;
+
   const CACHE_VERSION = 'v1'; // Update this when your image structure changes
   
   // Count images in each category and create placeholder containers
@@ -120,81 +120,56 @@ const RecapWrapper = () => {
     }
   }, []);
   
-  // Function to fetch media items from localStorage or image.json
+  // Function to get image paths for a category 
+  const getImagePathsByCategory = async (category) => {
+    // Fix folder mapping to match actual folder names
+    const categoryFolder = category === 'Church' ? 'Wedding' : 'Traditional';
+    try {
+      // Dynamically import all images from the category folder
+      const images = import.meta.glob('/public/optimized-images/**/*.webp');
+      const imageList = [];
+      
+      for (const path in images) {
+        // Make folder name check case-insensitive
+        if (path.toLowerCase().includes(`/optimized-images/${categoryFolder.toLowerCase()}/`)) {
+          imageList.push({
+            imgUrl: path.replace('/public', ''),
+            category
+          });
+        }
+      }
+      
+      return imageList;
+    } catch (error) {
+      console.error('Error loading images:', error);
+      return [];
+    }
+  };
+
+  // Modified fetchMediaItems to use local images
   const fetchMediaItems = async (category = "") => {
     setShowAnimation(true);
     setIsFetchingMedia(true);
 
-    const cacheKey = `media-items-${category || 'all'}-${CACHE_VERSION}`;
-    const storageTimestampKey = `media-items-timestamp-${CACHE_VERSION}`;
-    const CACHE_EXPIRY = 48 * 60 * 60 * 1000; // 48 hours in milliseconds
-    
     try {
-      // Before fetching, create placeholders based on either:
-      // 1. Current category count if available, or
-      // 2. A default number
-      const categoryCount = categoryCounts[category] || 0;
-      if (categoryCount > 0) {
-        createPlaceholders(categoryCount);
-      }
-      
-      // Check localStorage first
-      const cachedData = localStorage.getItem(cacheKey);
-      const cachedTimestamp = localStorage.getItem(storageTimestampKey);
-      const now = new Date().getTime();
-      
-      // If we have valid cached data that's not expired
-      if (cachedData && cachedTimestamp && (now - parseInt(cachedTimestamp) < CACHE_EXPIRY)) {
-        const parsedData = JSON.parse(cachedData);
-        
-        // Create placeholders with accurate count
-        createPlaceholders(parsedData.length);
-        
-        // Process image data to update category counts
-        processImageData(parsedData);
-        
-        // Set the media items from cache
-        setMediaItems(parsedData);
-        
-        // Preload the images in the background for smoother experience
-        preloadImages(parsedData).catch(err => console.error('Error preloading images:', err));
-        
-        setIsFetchingMedia(false);
-        setShowAnimation(false);
-        return;
-      }
-      
-      // If no cache or expired, filter data from imageJson
-      const filteredData = imageJson.imageData.filter(item => !category || item.category === category);
+      const imageList = await getImagePathsByCategory(category);
       
       // Create placeholders with accurate count
-      createPlaceholders(filteredData.length);
+      createPlaceholders(imageList.length);
       
       // Process image data to update category counts
-      processImageData(imageJson.imageData);
-      
-      // Store in localStorage for future use
-      localStorage.setItem(cacheKey, JSON.stringify(filteredData));
-      localStorage.setItem(storageTimestampKey, new Date().getTime().toString());
+      processImageData(imageList);
       
       // Preload images before setting the media items
-      await preloadImages(filteredData);
+      await preloadImages(imageList);
       
-      setMediaItems(filteredData);
-      setIsFetchingMedia(false);
-      setShowAnimation(false);
-      
+      setMediaItems(imageList);
     } catch (error) {
-      console.error('Error fetching or caching media items:', error);
-      // Fallback to the original data fetching
-      const filteredData = imageJson.imageData.filter(item => !category || item.category === category);
-      processImageData(imageJson.imageData);
-      createPlaceholders(filteredData.length);
-      setMediaItems(filteredData);
+      console.error('Error loading media items:', error);
+      toast.error('Failed to load images');
+    } finally {
       setIsFetchingMedia(false);
       setShowAnimation(false);
-    } finally {
-      // Ensure we reset the switching state
       setIsSwitchingCategory(false);
     }
   };
@@ -234,90 +209,6 @@ const RecapWrapper = () => {
     bgImg.src = optimizedImage(recapImg);
   }, []);
 
-  const uploadFile = async (file) => {
-    const data = new FormData();
-    data.append('file', file);
-    data.append('upload_preset', 'mandc_default_img');
-
-    try {
-      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-      const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
-
-      const res = await axios.post(api, data, {
-        onUploadProgress: (event) => {
-          const percent = Math.round((event.loaded * 100) / event.total);
-          setProgress(percent);
-        },
-      });
-
-      const { secure_url } = res.data;
-      return secure_url;
-    } catch (error) {
-      console.error('Cloudinary upload error:', error.response ? error.response.data : error);
-      return null;
-    }
-  };
-
-  const handleFileUpload = async (event) => {
-    const files = event.target.files;
-    if (!files || files.length === 0) return;
-  
-    setLoading(true);
-    setProgress(0);
-    const uploadedMediaItems = [];
-  
-    try {
-      for (let file of files) {
-        if (file.type.startsWith('image/')) {
-          const imgUrl = await uploadFile(file);
-          
-          // Skip duplicate media
-          if (mediaItems.some(item => item.imgUrl === imgUrl)) {
-            toast.warn('Duplicate media detected, skipping...');
-            continue;
-          }
-      
-          if (imgUrl) {
-            uploadedMediaItems.push({ type: 'image', imgUrl, category: selectValue });
-            await axios.post(`${BACKEND_URL}/api/upload-url`, { imgUrl, category: selectValue });
-            try {
-              await axios.post(`${BACKEND_URL}/api/update-image-json`, { imgUrl, category: selectValue });
-              
-              // Update category counts
-              setCategoryCounts(prev => ({
-                ...prev,
-                [selectValue]: (prev[selectValue] || 0) + 1
-              }));
-              
-              // Clear localStorage cache after uploading new images
-              for (const key of Object.keys(localStorage)) {
-                if (key.startsWith('media-items-')) {
-                  localStorage.removeItem(key);
-                }
-              }
-              
-              toast.success(`Uploaded: ${file.name}`);
-            } catch (error) {
-              console.error('Error updating image.json:', error);
-              toast.error('Failed to update image.json');
-            }
-          }
-        } else {
-          toast.error(`Skipped unsupported file: ${file.name}`);
-        }
-      }
-  
-      setMediaItems((prevItems) => [...prevItems, ...uploadedMediaItems]);
-    } catch (error) {
-      console.error('Error uploading files:', error.response?.data || error.message);
-      toast.error('Failed to upload one or more files. Please try again.');
-    } finally {
-      setLoading(false);
-      setProgress(0);
-      fileInputRef.current.value = '';
-    }
-  };
-
   const handleNext = () => {
     if (sliderRef.current) {
       sliderRef.current.slickNext();
@@ -353,12 +244,10 @@ const RecapWrapper = () => {
     }
   };
 
-  // Optimized Images from Cloudinary
+  // Simplified optimizedImage function for local files
   const optimizedImage = (url) => {
-    return url
-      .replace("/upload/", "/upload/f_auto,q_auto,w_auto,fl_strip_profile/")
-      .replace(/\.(png|jpe?g|gif)/i, '.avif' || '.webp');
-  }; 
+    return url; // Local .webp files are already optimized
+  };
 
   // Enhanced category switching function with debouncing
   const handleCategorySwitch = (category) => {
@@ -408,7 +297,7 @@ const RecapWrapper = () => {
             multiple
             accept="image/*"
             className="hidden"
-            onChange={handleFileUpload}
+            // onChange={handleFileUpload}
           />
 
           <div className="Select py-2 bg-[#e70d8c] text-white rounded-lg">

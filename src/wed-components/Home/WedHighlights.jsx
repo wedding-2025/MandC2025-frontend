@@ -1,25 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SlideFromBottom from '../../Animations/SlideFromBottom';
+import DSC_0662 from '../../assets/img/DSC_0662.webp';
+import DSC_0748 from '../../assets/img/DSC_0748.webp';
 
 const WedHighlights = () => {
+  const [imageLoaded, setImageLoaded] = useState({ church: false, traditional: false });
+  const [imageError, setImageError] = useState({ church: false, traditional: false });
+
+  const handleImageLoad = (type) => {
+    setImageLoaded(prev => ({ ...prev, [type]: true }));
+  };
+
+  const handleImageError = (type) => {
+    setImageError(prev => ({ ...prev, [type]: true }));
+    console.error(`Failed to load ${type} image`);
+  };
+
   const images = [
     {
-      church: 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1740372656/xmbhumfg1kdplgthcwgi.jpg',
-      traditional: 'https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto//v1740373349/qlltds9fmzjxumc7ijeq.jpg',
+      church: DSC_0662,
+      traditional: DSC_0748,
     }
   ];
-
-  const optimizeAndPreload = (url) => {
-    const optimizedUrl = url
-      .replace("/upload/", "/upload/f_auto,q_auto,w_auto,fl_strip_profile/")
-      .replace(/\.(png|jpe?g|gif)/i, '.avif' || '.webp');
-  
-    const img = new Image();
-    img.src = optimizedUrl;
-  
-    return optimizedUrl;
-  };
 
   return (
     <>
@@ -46,9 +49,11 @@ const WedHighlights = () => {
                     </p>
                     <div className="mt-6">
                       <img
-                        src={optimizeAndPreload(images[0].church)}
+                        src={images[0].church}
                         alt="Church Wedding"
-                        className="object-cover w-full rounded-lg aspect-[4/3] bg-slate-100 bg-transparent"
+                        className={`object-cover w-full rounded-lg aspect-[4/3] bg-slate-100 ${!imageLoaded.church ? 'animate-pulse' : ''}`}
+                        onLoad={() => handleImageLoad('church')}
+                        onError={() => handleImageError('church')}
                         loading='lazy'
                       />
                     </div>
@@ -66,9 +71,11 @@ const WedHighlights = () => {
                     </p>
                     <div className="mt-6">
                       <img
-                        src={optimizeAndPreload(images[0].traditional)}
+                        src={images[0].traditional}
                         alt="Traditional Marriage"
-                        className="object-cover w-full rounded-lg aspect-[4/3] bg-slate-100"
+                        className={`object-cover w-full rounded-lg aspect-[4/3] bg-slate-100 ${!imageLoaded.traditional ? 'animate-pulse' : ''}`}
+                        onLoad={() => handleImageLoad('traditional')}
+                        onError={() => handleImageError('traditional')}
                         loading='lazy'
                       />
                     </div>

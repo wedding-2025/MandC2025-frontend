@@ -4,6 +4,9 @@ import { toast } from 'react-toastify';
 import { InfinitySpin } from 'react-loader-spinner';
 import NewCarousel from './Carousel';
 import { NewImageCard } from './ImageCard';
+import { useUI } from '../../../context/UIContext';
+import recapImg from '../../../assets/img/recapImg.webp'
+// C:\Users\engin\OneDrive\Desktop\My Portfolio\PROJECTS\charles-wedding-2025\src\assets\img\recapImg.webp
 
 const RecapWrapper = () => {
   const [mediaItems, setMediaItems] = useState([]);
@@ -22,6 +25,13 @@ const RecapWrapper = () => {
     Traditional: 0
   });
   const [placeholderContainers, setPlaceholderContainers] = useState([]);
+
+  // Hide the Navbar when viewing a single image
+  const { setIsNavbarHidden } = useUI();
+
+  useEffect(() => {
+    setIsNavbarHidden(false)
+  }, [])
   
   // Debounce timeout ref
   const debounceTimeoutRef = useRef(null);
@@ -43,20 +53,22 @@ const RecapWrapper = () => {
   };
 
   // For Image Category (Church and Traditional)
-  const [selectedCategory, setSelectedCategory] = useState("Traditional");
+  const [selectedCategory, setSelectedCategory] = useState("Church");
 
   // Replace recapImg with local path
   // const recapImg = '/optimized-images/recap-bg.webp';
-  const recapImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qeoxjv1jmforzrjch0vw.png';
+  // const recapImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qeoxjv1jmforzrjch0vw.png';
 
 
-  const CACHE_VERSION = 'v1'; // Update this when your image structure changes
+  // const CACHE_VERSION = 'v1'; // Update this when your image structure changes
   
   // Count images in each category and create placeholder containers
   const processImageData = (data) => {
     // Count images by category
     const counts = data.reduce((acc, item) => {
-      acc[item.category] = (acc[item.category] || 0) + 1;
+      // acc[item.category] = (acc[item.category] || 0) + 1;
+      if (!acc[item.category]) acc[item.category] = [];
+      acc[item.category].push(item);
       return acc;
     }, {});
     
@@ -69,6 +81,7 @@ const RecapWrapper = () => {
     // Save category counts to localStorage for faster subsequent loads
     try {
       localStorage.setItem('category-counts', JSON.stringify(counts));
+      localStorage.getItem('category-counts', JSON.stringify(counts));
     } catch (e) {
       console.error('Error saving category counts to localStorage:', e);
     }
@@ -99,7 +112,7 @@ const RecapWrapper = () => {
           resolve();
         };
         img.onerror = reject;
-        img.src = optimizedImage(item.imgUrl);
+        img.src = item.imgUrl;
       });
     }));
   };
@@ -162,6 +175,12 @@ const RecapWrapper = () => {
       
       // Preload images before setting the media items
       await preloadImages(imageList);
+
+      try {
+        localStorage.setItem(`image-${category}`, JSON.stringify(imageList));
+      } catch (e) {
+        console.error(`Error saving images for ${category} to localStorage:`,e)
+      }
       
       setMediaItems(imageList);
     } catch (error) {
@@ -186,7 +205,7 @@ const RecapWrapper = () => {
       // Set a timeout before fetching to debounce rapid category changes
       debounceTimeoutRef.current = setTimeout(() => {
         fetchMediaItems(selectedCategory);
-      }, 100); // 100ms debounce time
+      }, 1); // 1ms debounce time
     }
     
     // Clean up timeout on unmount or when dependency changes again
@@ -199,14 +218,57 @@ const RecapWrapper = () => {
 
   // Initial load
   useEffect(() => {
-    // Trigger initial fetch
-    setIsSwitchingCategory(true);
+    const loadInitialData = async () => {
+      // setIsSwitchingCategory(true); // Remove this line
+
+      try {
+        const storedTraditionalImages = localStorage.getItem('images-Traditional');
+        const storedChurchImages = localStorage.getItem('images-Church');
+
+        let initialCategory = 'Church'; // Default category
+        let traditionalImages = [];
+        let churchImages = [];
+
+        if (storedTraditionalImages && storedChurchImages) {
+          // If both categories are in the local storage, load them
+          traditionalImages = JSON.parse(storedTraditionalImages);
+          churchImages = JSON.parse(storedChurchImages);
+
+          // Determine Initial category bases on what's available
+          if (traditionalImages.length === 0 && churchImages.length > 0) {
+            initialCategory = 'Church';
+          }
+
+          // Combine and set Media items
+          setMediaItems([...traditionalImages, ...churchImages]);
+
+          // Process and set category
+          processImageData([...traditionalImages, ...churchImages]);
+
+          setIsSwitchingCategory(false);
+        } else {
+          // If not in local storage, fetch them
+          setIsSwitchingCategory(true); // Add this line
+          await fetchMediaItems('Traditional');
+          await fetchMediaItems('Church');
+          setIsSwitchingCategory(false);
+        }
+
+        setSelectedCategory(initialCategory); // update selectedCategory AFTER loading
+        // setIsSwitchingCategory(false); // Remove this line
+      } catch (error) {
+        console.error('Error Loading initial data:', error);
+        setIsSwitchingCategory(false);
+      }
+    };
+
+    loadInitialData();
   }, []);
 
   // Preload the background image
   useEffect(() => {
     const bgImg = new Image();
-    bgImg.src = optimizedImage(recapImg);
+    bgImg.src = recapImg;
   }, []);
 
   const handleNext = () => {
@@ -244,10 +306,31 @@ const RecapWrapper = () => {
     }
   };
 
+  // arrow key function to skip images
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'ArrowRight') {
+        handleNext();
+      } else  if (event.key === 'ArrowLeft') {
+        handlePrev();
+      }
+    };
+
+    // Only add the event listener when selectedMediaIndex is not null (i.e., image is displayed)
+    if (selectedMediaIndex !== null) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      // Remove the event listener when selectedMediaIndex changes
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [selectedMediaIndex]);
+
   // Simplified optimizedImage function for local files
-  const optimizedImage = (url) => {
-    return url; // Local .webp files are already optimized
-  };
+  // const optimizedImage = (url) => {
+  //   return url; // Local .webp files are already optimized
+  // };
 
   // Enhanced category switching function with debouncing
   const handleCategorySwitch = (category) => {
@@ -261,6 +344,23 @@ const RecapWrapper = () => {
     setIsSwitchingCategory(true);
     setIsFetchingMedia(true);
     setShowAnimation(true);
+
+    try {
+      const storedImages = localStorage.getItem(`images-${category}`);
+      
+      if (storedImages) {
+        const parsedImages = JSON.parse(storedImages);
+        setMediaItems(parsedImages);
+        setIsFetchingMedia(false);
+        setShowAnimation(false);
+        setIsSwitchingCategory(false);
+      } else {
+        fetchMediaItems(category);
+      }
+    } catch (error) {
+      console.error('Error handling category switch', error);
+      fetchMediaItems(category);
+    }
     
     // Create placeholders based on known category count
     const categoryCount = categoryCounts[category] || 0;
@@ -280,7 +380,7 @@ const RecapWrapper = () => {
       style={{ 
         width: '100%', 
         height: '100vh', 
-        backgroundImage: `url(${optimizedImage(recapImg)})`,
+        backgroundImage: `url(${recapImg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -352,13 +452,7 @@ const RecapWrapper = () => {
           {isFetchingMedia ? (
             <div>
               {/* Show placeholder containers while images are loading */}
-              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 mt-1 overflow-x-hidden">
-                {placeholderContainers.map((item, index) => (
-                  <div key={`placeholder-${index}`} className='border border-gray-700 rounded-lg bg-gray-400/50 animate-pulse'>
-                    <div className="w-full h-24 sm:h-32 rounded-lg"></div>
-                  </div>
-                ))}
-              </div>
+              
               
               <div className="flex flex-col justify-center items-center mt-4">
                 <InfinitySpin
@@ -367,9 +461,9 @@ const RecapWrapper = () => {
                   color='#920859'
                   ariaLabel="infinity-spin-loading"
                 />
-                {totalImages > 0 && (
+                {/* {totalImages > 0 && (
                   <p className="mt-4 text-gray-700">Loading images: {imagesLoaded} of {totalImages}</p>
-                )}
+                )} */}
               </div>
             </div>
           ) 
@@ -382,13 +476,13 @@ const RecapWrapper = () => {
                 </p>
               ) : (
                 mediaItems.map((item, index) => (
-                  <div key={index} className='border border-gray-700 rounded-lg bg-gray-400/50'>
+                  <div key={index} className='border border-gray-700 rounded-lg bg-gray-900/50'>
                     <div
                       className="w-full h-auto cursor-pointer mx-auto overflow-hidden"
                       onClick={() => setSelectedMediaIndex(index)}
                     >
                       <img
-                        src={optimizedImage(item.imgUrl)}
+                        src={item.imgUrl}
                         alt={`media-${index}`}
                         className="w-full h-24 sm:h-max object-contain rounded-lg border border-b-gray-900"
                         loading='lazy'
@@ -403,7 +497,7 @@ const RecapWrapper = () => {
         
         {/* Display Selected Media */}
         {selectedMediaIndex !== null && (
-          <div className='fixed inset-0 z-50 w-full h-full flex items-center justify-center bg-black/70 backdrop-blur-md'>
+          <div className='fixed inset-0 z-50 w-full h-[100vh] flex items-center justify-center bg-black backdrop-blur-md'>
             <div
               className="relative w-full h-full p-4 rounded-lg overflow-hidden my-auto mx-auto flex items-center justify-center"
               onTouchStart={handleTouchStart}
@@ -411,7 +505,10 @@ const RecapWrapper = () => {
             >
               <button
                 className="absolute left-4 top-20 sm:top-[5rem] px-3 py-2 text-base bg-gray-50 text-gray-900 rounded-xl shadow-xl border-2 border-gray-600 cursor-pointer z-20"
-                onClick={() => setSelectedMediaIndex(null)}
+                onClick={() => {
+                  setSelectedMediaIndex(null);
+                  setIsNavbarHidden(false);
+                }}
               >
                 Close
               </button>
@@ -426,7 +523,8 @@ const RecapWrapper = () => {
                   <NewImageCard
                     key={index}
                     className="w-full full"
-                    imageUrl={optimizedImage(item.imgUrl)}
+                    onClick={setIsNavbarHidden(true)}
+                    imageUrl={item.imgUrl}
                     altText="Placeholder image"
                     objectFit="contain"
                   />

@@ -2,7 +2,8 @@ import React from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaArrowRight, FaTimes, FaCopy, FaLink } from 'react-icons/fa';
-// import navLogo from '../../assets/images/navLogo.png';
+import navLogo from '../../assets/img/navLogo.webp';
+import { useUI } from '../../context/UIContext';
 import { FaBarsStaggered } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
 // import 'react-toastify/dist/ReactToastify.css';
@@ -10,13 +11,15 @@ import { toast } from 'react-toastify';
 
 
 function Navbar({ scrollToContact }) {
-  const navLogo = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qgbmvx17ijxjheu8ddq9.png';
+  // const navLogo = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qgbmvx17ijxjheu8ddq9.png';
 
   // Navbar state
   const [isOpen, setIsOpen] = useState(false);
 
-  // Drawer
+  // Hide Navbar for Recap when viewing single image
+  const { isNavbarHidden } = useUI();
 
+  // Drawer
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isBankOpen, setIsBankOpen] = useState(false);
 
@@ -135,18 +138,18 @@ function Navbar({ scrollToContact }) {
 
   return (
     <div>
-      <div className={`top-0 !fixed !z-40 w-full font-gFont1 font-bold`} id='block-container' role='navigation'>
+      <nav className={`${isNavbarHidden ? 'hidden' : 'top-0 block !fixed !z-40 w-full font-gFont1 font-bold'}`} id='block-container' role='navigation'>
         <section className={`fixed !top-5 z-40 left-8 right-8 rounded-3xl rounded-bl-3xl md:border md:border-black/10 md:rounded-2xl bg-white/80 backdrop-blur-xl md:pl-8 md:transition-all 2xl:w-[1536px] m-auto transition-transform duration-300 ${ visible ? 'translate-y-0 shadow-lg' : '-translate-y-[calc(100%+20px)] shadow-none' }`} style={{ transitionTimingFunction: 'cubic-bezier(0.165, 0.84, 0.44, 1)', transitionDuration: '600ms', transitionProperty: 'transform, box-shadow' }}>
           <div className="w-full mx-auto max-w-7xl h-full hidden gap-5 md:flex md:items-center" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
             {/* LOGO */}
-              <div className="w-full h-full flex items-center justify-start cursor-pointer wed-title">
+              <div className="w-full h-full flex items-center justify-start cursor-pointer">
                 <div className="!w-auto object-cover" style={{ transform: 'none', opacity: '1', objectFit: 'none', background: 'transparent', position: 'relative', borderRadius: 'inherit'}}>
                   <NavLink to="/">
                     <img src={navLogo} alt="logo" className='!w-auto object-cover' style={{ height: '40px', backgroundColor: 'transparent' }} />
                   </NavLink>
                 </div>
                 <NavLink className='mc-spans' to="/">
-                  <div className='text-black text-[20px] font-semibold ml-2 font-custom'>
+                  <div className='text-black text-[20px] font-semibold ml-2 font-custom wed-title'>
                     <span>M</span>
                     <span>&</span>
                     <span>C</span>
@@ -258,7 +261,7 @@ function Navbar({ scrollToContact }) {
             </div>
           </div>
         </section>
-      </div>
+      </nav>
 
       {/* Drawer */}
       <motion.div

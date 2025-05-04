@@ -42,5 +42,5 @@ src/wed-components/RECAP/New/Later.jsx
 convertImages.js
 public/Images
 public/ima
-src\assets\optimized-images
-src\assets\convert.js
+src/assets/optimized-images
+src/assets/convert.js

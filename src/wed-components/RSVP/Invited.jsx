@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import InvitedImg from '../../assets/images/InvitedImg.png';
+import InvitedImg from '../../assets/optimized-images/InvitedImg.webp';
 
 const Invited = () => {
-  const InvitedImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/ziuecv6cwccb7oj1nkba.png';
+  // const InvitedImg = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/ziuecv6cwccb7oj1nkba.png';
 
   const calculateTimeLeft = () => {
     // Set target date in UTC, then adjust for WAT (UTC+1)

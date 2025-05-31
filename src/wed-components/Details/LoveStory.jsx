@@ -1,9 +1,9 @@
 import React from 'react';
-// import StoryImage from '../../assets/images/StoryImg.png';
+import StoryImage from '../../assets/img/StoryImg.webp';
 import NumberCounter from '../../Animations/NumberCount';
 
 const LoveStory = () => {
-  const StoryImage = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482103/vp3rnobexljdtlbt9aeq.png';
+  // const StoryImage = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482103/vp3rnobexljdtlbt9aeq.png';
 
   return (
     <>

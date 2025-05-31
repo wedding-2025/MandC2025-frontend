@@ -6,6 +6,10 @@ import heroBg from '../../assets/img/heros copy.webp';
 
 const Hero = () => {
 
+  const HeroBackGround = (localStorage.getItem('hero-img') || heroBg);
+
+  // console.log('Hero rendered')
+
   // let heroBg3 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/v1733148696/itdzbmvn0zwsxxmcao80.jpg';
   // https://res.cloudinary.com/dzsuia2ia/image/upload/v1733837769/isowgiterxtyb87ixrsz.jpg
 
@@ -63,7 +67,7 @@ const Hero = () => {
           <div className="absolute inset-0 w-full h-full">
             <div className="relative w-full h-full bg-inherit">
               <div className="w-full h-full opacity-70 bg-black/10 object-cover" datatype='image' style={{ transform: 'none', opacity: '1', objectFit: 'none', background: 'transparent', position: 'relative', borderRadius: 'inherit' }}>
-                <img src={heroBg} alt="The couple's image background" className="w-full h-full opacity-80 bg-black/10 object-cover" loading='lazy' style={{ background: 'transparent', loading: 'lazy' }}/>
+                <img src={HeroBackGround} alt="The couple's image background" className="w-full h-full opacity-80 bg-black/10 object-cover" loading='lazy' style={{ background: 'transparent', loading: 'lazy' }}/>
               </div>
             </div>
           </div>

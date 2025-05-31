@@ -1,9 +1,9 @@
 import React from 'react';
-// import Udomimi4 from '../../assets/images/Udomimi4.png';
+import Udomimi4 from '../../assets/img/Udomimi4.webp';
 import { FaCircle } from 'react-icons/fa6';
 
 const OurJourney = () => {
-  const Udomimi4 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1733482104/oxaopamjbi7bulpoybhz.jpg';
+  // const Udomimi4 = 'https://res.cloudinary.com/dzsuia2ia/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1733482104/oxaopamjbi7bulpoybhz.jpg';
 
   return (
     <>

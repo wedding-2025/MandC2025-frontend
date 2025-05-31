@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ScrollToTop, { scrollToTopManually } from './ScrollToTop.jsx';
 
 import {
@@ -20,6 +20,8 @@ import PageNotFound from './pages/PageNotFound';
 import RecapPage from './pages/RecapPage';
 import { ToastContainer } from 'react-toastify';
 import './App.css';
+import WelcomeScreen from './Animations/WelcomeScreen';
+import HeroBg from './assets/img/heros copy.webp';
 
 
 // import NewPicture from './wed-components/RECAP/Test/NewPicture.jsx'; // Remove later
@@ -68,12 +70,32 @@ const RouteWrapper = ({ children })  => {
 
 const App = () => {
   const contactRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(true);
 
   const scrollToContact = () => {
     if (contactRef.current) {
       contactRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   };
+
+  // Typing Complete Effect
+  const handleTypingComplete = () => {
+    setTimeout(() => {
+      setShowWelcome(false);
+    }, 500);
+  };
+
+  useEffect(() => {
+    // Only keep the loading timer
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+
+    localStorage.setItem('hero-img', HeroBg);
+
+    return () => clearTimeout(loadingTimer);
+  }, []);
 
   // const scrollToContact = () => {
   //   // Dispatch a custom event that can be caught by Homepage
@@ -108,10 +130,15 @@ const App = () => {
   );
 
   return (
-    <>
+    <div>
       <ToastContainer />
-      <RouterProvider router={ router } />
-    </>
+      {showWelcome && (
+        <WelcomeScreen isVisible={showWelcome} onTypingComplete={handleTypingComplete} />
+      )}
+      <div style={{ visibility: isLoading || showWelcome ? 'hidden' : 'visible' }}>
+        <RouterProvider router={router} />
+      </div>
+    </div>
   );
 }
 

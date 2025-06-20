@@ -9,9 +9,9 @@ const RsvpFormPage = () => {
   return (
     <>
 
-      <Helmet>
+{/*       <Helmet>
         <link rel="preload" type="image/webp" href="https://res.cloudinary.com/dzsuia2ia/image/upload/f_webp,q_auto,w_auto/v1733482103/roxfysaaqpcy4e6z6smb.webp" as="image" />
-      </Helmet>
+      </Helmet> */}
 
 
       <div style={{ width: '100%', height: '100vh' }}>

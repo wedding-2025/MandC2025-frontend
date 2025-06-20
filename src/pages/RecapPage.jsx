@@ -84,11 +84,11 @@ const RecapPage = () => {
       <Helmet>
         <title>Wedding Recap - M & C 2025</title>
         <meta name="description" content="See the beautiful moments from Charles and Maryjane’s wedding in 2025! Browse photos and videos from the big day." />
-        <meta property="og:title" content="Wedding Recap - M & C 2025" />
+{/*         <meta property="og:title" content="Wedding Recap - M & C 2025" />
         <meta property="og:description" content="See the beautiful moments from Charles & Maryjane’s wedding in 2025!" />
         <meta property="og:image" content="https://res.cloudinary.com/dzsuia2ia/image/upload/v1738675956/soyynq6aedquqosbn6me.jpg" />
         <meta property="og:url" content="https://mandc2025.org/recap" />
-        <link rel="preload" type="image/png" href="https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qeoxjv1jmforzrjch0vw.png" as="image"></link>
+        <link rel="preload" type="image/png" href="https://res.cloudinary.com/dzsuia2ia/image/upload/v1733482107/qeoxjv1jmforzrjch0vw.png" as="image"></link> */}
       </Helmet>
 
 

@@ -142,20 +142,20 @@ function Navbar({ scrollToContact }) {
         <section className={`fixed !top-5 z-40 left-8 right-8 rounded-3xl rounded-bl-3xl md:border md:border-black/10 md:rounded-2xl bg-white/80 backdrop-blur-xl md:pl-8 md:transition-all 2xl:w-[1536px] m-auto transition-transform duration-300 ${ visible ? 'translate-y-0 shadow-lg' : '-translate-y-[calc(100%+20px)] shadow-none' }`} style={{ transitionTimingFunction: 'cubic-bezier(0.165, 0.84, 0.44, 1)', transitionDuration: '600ms', transitionProperty: 'transform, box-shadow' }}>
           <div className="w-full mx-auto max-w-7xl h-full hidden gap-5 md:flex md:items-center" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
             {/* LOGO */}
-              <div className="w-full h-full flex items-center justify-start cursor-pointer">
+              <div className="w-full h-full flex items-center justify-start cursor-pointer" onClick={() => { window.location.reload() }}>
                 <div className="!w-auto object-cover" style={{ transform: 'none', opacity: '1', objectFit: 'none', background: 'transparent', position: 'relative', borderRadius: 'inherit'}}>
-                  <NavLink to="/">
+                  <Link to="/">
                     <img src={navLogo} alt="logo" className='!w-auto object-cover' style={{ height: '40px', backgroundColor: 'transparent' }} />
-                  </NavLink>
+                  </Link>
                 </div>
-                <NavLink className='mc-spans' to="/">
+                <Link className='mc-spans' to="/">
                   <div className='text-black text-[20px] font-semibold ml-2 font-custom wed-title'>
                     <span>M</span>
                     <span>&</span>
                     <span>C</span>
                     <span className='ml-1'>2025</span>
                   </div>
-                </NavLink>
+                </Link>
               </div>
             {/*  NAVIGATION */}
             <div className="w-full h-full flex items-center justify-center leading-[17px]">
@@ -182,7 +182,7 @@ function Navbar({ scrollToContact }) {
 
           {/*  RESPONSIVE NAVIGATION */}
           <div className="relative z-40 w-full h-full flex items-center md:hidden" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
-            <NavLink to="/">
+            <Link to="/" onClick={() => { window.location.reload() }}>
               <div 
                 className="!w-auto px-3 object-cover" 
                 datatype='image' 
@@ -196,15 +196,15 @@ function Navbar({ scrollToContact }) {
                 }} onClick={ handleNavClick }>
                 <img src={navLogo} alt="logo" className='!w-auto px-2 object-cover' style={{ height:  '40px', backgroundColor: 'transparent' }} />
               </div>
-            </NavLink>
-            <NavLink className='mc-spans' to="/">
+            </Link>
+            <Link className='mc-spans' to="/" onClick={() => { window.location.reload() }}>
                   <div className='text-black text-[20px] font-semibold mr-auto ml-auto font-custom' onClick={ handleNavClick }>
                     <span>M</span>
                     <span>&</span>
                     <span>C</span>
                     <span className='ml-1'>2025</span>
                   </div>
-            </NavLink>
+            </Link>
             <button onClick={ toggleMenu }>
               {isOpen ? <FaTimes className='absolute right-6 top-5 size-6' style={{ transform: 'none' }} /> : <FaBarsStaggered className='absolute right-6 top-5 size-6' style={{ transform: 'none' }} />}
             </button>

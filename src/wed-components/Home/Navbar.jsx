@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaArrowRight, FaTimes, FaCopy, FaLink } from 'react-icons/fa';
 import navLogo from '../../assets/img/navLogo.webp';

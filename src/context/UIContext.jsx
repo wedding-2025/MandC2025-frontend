@@ -4,9 +4,10 @@ const UIContext = createContext();
 
 export const UIProvider = ({ children }) => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
+  const [isFooterHidden, setIsFooterHidden] = useState(false);
 
   return (
-    <UIContext.Provider value={{ isNavbarHidden, setIsNavbarHidden }}>
+    <UIContext.Provider value={{ isNavbarHidden, setIsNavbarHidden, isFooterHidden, setIsFooterHidden }}>
       {children}
     </UIContext.Provider>
   );

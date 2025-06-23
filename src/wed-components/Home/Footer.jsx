@@ -3,12 +3,14 @@ import { NavLink } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaTwitter, FaTiktok, FaCopy, FaLink} from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
+import { useUI } from '../../context/UIContext';
 import SlideFromBottom from '../../Animations/SlideFromBottom';
 
 
 const Footer = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isBankOpen, setIsBankOpen] = useState(false);
+  const { isFooterHidden } = useUI();
 
   // The account details
   const accounts = [
@@ -55,7 +57,7 @@ const Footer = () => {
 
   return (
     <>
-      <div style={{ width: '100%', opacity: '1', height: '100%' }}>
+      <div style={{ width: '100%', opacity: '1', height: '100%' }} className={`${isFooterHidden ? 'hidden' : 'block'}`}>
         <section className="bg-black/90 px-6 py-20 md:px-8 font-gFont1">
           <div style={{ opacity: '1', transform: 'none' }}>
             <div className="mx-auto max-w-7xl flex flex-col gap-16">

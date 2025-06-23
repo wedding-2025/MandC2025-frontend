@@ -27,10 +27,13 @@ const RecapWrapper = () => {
   const [placeholderContainers, setPlaceholderContainers] = useState([]);
 
   // Hide the Navbar when viewing a single image
-  const { setIsNavbarHidden } = useUI();
+  const { setIsNavbarHidden, setIsFooterHidden } = useUI();
 
   useEffect(() => {
-    setIsNavbarHidden(false)
+    setIsNavbarHidden(false);
+    setIsFooterHidden(true); // Hide the footer when on recap page
+
+    return () => setIsFooterHidden(false); // Reset footer visibility on unmount
   }, [])
   
   // Debounce timeout ref

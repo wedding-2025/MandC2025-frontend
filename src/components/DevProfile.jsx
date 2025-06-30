@@ -8,7 +8,7 @@ import fav from '../assets/fav.jpg';
 const DevProfile = ({ 
   setIsPopupOpen,
   name = 'Dubem Umeh',
-  title = 'Full Stack Developer',
+  title = 'Front-End Developer',
   location = 'Takoradi, Ghana',
   avatar = fav,
   bio = 'Passionate Developer with 3+ years of experience building scalable web applications. I love creating elegant solutions to complex problems',

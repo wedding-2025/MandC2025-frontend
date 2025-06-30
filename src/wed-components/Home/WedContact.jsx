@@ -38,9 +38,9 @@ const WedContact = forwardRef((props, ref) => {
                     <span className='text-[#7a0646] text-base sm:text-lg'>
                     <FaPhone />
                     </span>
-                    <span className="block ml-3 text-base sm:text-lg font-medium text-slate-900 underline underline-offset-4 hover:text-[#7a0646] hover:underline hover:opacity-90 transition-all duration-200">
+                    <span className="block ml-3 text-base sm:text-lg font-medium text-slate-900">
                       <span>
-                      <a href="tel:+2348068983123">08068983123</a>, <a href="tel:+2347026740751">07026740751</a>
+                      <a href="tel:+2348068983123" className='contact-tel'>(+234) 8068983123</a>, <a href="tel:+2347026740751" className='contact-tel'>(+234) 7010631147</a>
                       </span>
                     </span>
                   </div>

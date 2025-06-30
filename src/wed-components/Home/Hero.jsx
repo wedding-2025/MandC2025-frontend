@@ -31,15 +31,15 @@ const Hero = () => {
           <div className="w-full h-full mx-auto max-w-7xl flex justify-between flex-col gap-16 md:gap-20">
             <div className="z-20 w-full h-full flex flex-col gap-14 justify-between md:items-center md:gap-20">
               <div className="relative w-full h-full flex flex-col md:justify-between gap-10">
-                <div className="h-[1px] bg-white/40" style={{ width: '40%' }}></div>
+                <div className="h-[1px] hidden bg-white/40" style={{ width: '40%' }}></div>
                 {/* Count down */}
-                <div className="mt-[150%] sm:mt-[0]  sm:flex flex-col sm:flex-row sm:items-center md:justify-between" style={{ opacity: '1', transform: 'none' }}>
-                  <h1 className="text-3xl font-normal sm:text-white xl:text-5xl text-center">
-                    <span>
-                      <span datatype='text' className='flex items-center justify-center bg-gray-800/60 sm:bg-gray-800/20 text-gray-100 py-3 px-2 shadow-gray-50 shadow-inner rounded-lg'>
+                <div className="mt-[120%] sm:mt-[0]  flex flex-col sm:flex-row items-center justify-center md:justify-between" style={{ opacity: '1', transform: 'none' }}>
+                  <h1 className="text-2xl font-normal xl:text-3xl text-center w-fit">
+                    {/* <span> */}
+                      <span datatype='text' className='flex items-center font-semibold tracking-[2px] font-custom2 justify-center bg-white/50 text-gray-900 p-2 md:p-3 shadow-gray-50 shadow-2xl rounded-lg border border-gray-900'>
                       Scroll to Explore!
                       </span>
-                    </span>
+                    {/* </span> */}
                   </h1>
                   {/* COUNTDOWN CLOCK */}
                   {/* <span>
@@ -47,14 +47,14 @@ const Hero = () => {
                   </span> */}
                 </div>
                 {/* Join us and mark you calender */}
-                <div className="hidden w-full sm:grid grid-cols-1 gap-10 md:grid-cols-3 text-[20px]">
-                  <p className="w-full text-white font-light" style={{ opacity: '1', transform: 'none' }}>
+                <div className="hidden w-full sm:grid grid-cols-1 gap-10 md:grid-cols-3 text-[20px] md:-mb-10">
+                  <p className="w-fit text-black bg-white/50 px-3 py-2 text-center rounded-2xl font-custom2 tracking-[2px] font-normal" style={{ opacity: '1', transform: 'none' }}>
                     <span>
                     Our wedding day was a beautiful celebration of love, joy, and cherished moments with our dear family and friends.
                     </span>
                   </p>
                   <div className="h-[1px] bg-white/40 mt-3.5" style={{ opacity: '1', transform: 'none' }}></div>
-                  <p className="w-full text-white font-light" style={{ opacity: '1', transform: 'none' }}>
+                  <p className="w-fit text-black bg-white/50 px-3 py-2 text-center rounded-2xl font-custom2 tracking-[2px] font-normal" style={{ opacity: '1', transform: 'none' }}>
                     <span>
                     Thank you for being part of our journey and making our day truly unforgettable.
                     </span>

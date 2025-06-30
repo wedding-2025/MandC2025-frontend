@@ -69,4 +69,8 @@
   .Select ul li {
     @apply hover:bg-slate-200;
   }
+
+  .contact-tel {
+    @apply underline underline-offset-4 hover:text-[#7a0646] hover:opacity-90 transition-all duration-200;
+  }
 }

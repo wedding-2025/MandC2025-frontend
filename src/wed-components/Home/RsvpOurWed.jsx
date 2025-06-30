@@ -16,7 +16,7 @@ const RsvpOurWed = () => {
                 RSVP to Our Wedding
                 </span>
               </h2>
-              <p className="mx-auto mt-6 max-w-xl text-lg font-medium leading-8 text-gray-100/90">
+              <p className="mx-auto mt-6 max-w-xl text-lg md:text-xl font-medium leading-8 text-gray-100/90">
                 <span>
                   We would be honored to have you join us on our special day. Please confirm your attendance.
                 </span>

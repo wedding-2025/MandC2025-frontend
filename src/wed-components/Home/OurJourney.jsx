@@ -7,7 +7,7 @@ const OurJourney = () => {
 
   return (
     <>
-      <div style={{ width: '100%', opacity: '1' }}>
+      <div style={{ width: '100%', opacity: '1', height: '70vh' }}>
         <section className="relative isolate overflow-hidden bg-[#f5e7e9] px-6 py-24 sm:py-28 lg:px-8 shadow-inner">
           {/* Background with radial gradient */}
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.pink.200),white)] opacity-1"></div>
@@ -18,7 +18,7 @@ const OurJourney = () => {
           {/* Main content */}
           <div className="mt-0 mx-auto max-w-2xl lg:max-w-4xl">
             <figure>
-              <blockquote className="text-center text-xl font-semibold leading-9 text-gray-900 sm:text-2xl sm:leading-10 font-custom">
+              <blockquote className="text-center text-xl leading-9 text-black sm:text-2xl sm:leading-10 font-custom2 tracking-[1.7px] bg-white/80 backdrop-blur-md font-medium p-3 md:p-5 rounded-2xl">
                 <span>
                   We learn to love not by finding a perfect person, but by loving an imperfect person perfectly. 
                   May God bless our union and make it his own pride.

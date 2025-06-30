@@ -93,8 +93,8 @@ const DevProfile = ({
         </div>
 
         {/* Action Buttons */}
-        <div onClick={sendWhatsappMessage} className='flex gap-3 mb-4'>
-          <button className='flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-300 hover:scale-100 hover:shadow-lg'>
+        <div className='flex gap-3 mb-4'>
+          <button onClick={sendWhatsappMessage} className='flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-300 hover:scale-100 hover:shadow-lg'>
             Hire Me
           </button>
           <button onClick={downloadCV} className='flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:scale-100 border border-slate-600'>

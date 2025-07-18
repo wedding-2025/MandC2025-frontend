@@ -87,7 +87,7 @@ const DevProfile = ({
             <a href={`mailto:${email}`} className='hover:underline underline-offset-4'>{email}</a>
           </div>
           <div className='flex items-center text-slate-300 text-[16px] hover:text-blue-400 transition-colors'>
-            <Mail className='w-4 h-4 mr-3 text-blue-400' />
+            <Phone className='w-4 h-4 mr-3 text-blue-400' />
             <a href={`tel:${phone}`} className='hover:underline underline-offset-4'>{phone}</a>
           </div>
         </div>

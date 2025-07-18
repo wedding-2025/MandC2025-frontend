@@ -53,7 +53,7 @@ const WedContact = forwardRef((props, ref) => {
                     </span>
                     <span className="block ml-3 text-base sm:text-lg font-medium text-slate-900 underline underline-offset-4 hover:text-[#7a0646] hover:underline hover:opacity-90 transition-all duration-200">
                       <span>
-                      <a href="mailto:mj.charles2025@gmail.com">mj.charles2025@gmail.com</a>
+                      <a href="mailto:info@mandc2025.org">info@mandc2025.org</a>
                       </span>
                     </span>
                   </div>
